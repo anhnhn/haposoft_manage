@@ -18,7 +18,8 @@ class CreateProjectsTable extends Migration
             $table->string('name');
             $table->date('start_date');
             $table->date('end_date');
-            $table->integer('customer_id')->unsigned();;
+            $table->integer('customer_id')->unsigned();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

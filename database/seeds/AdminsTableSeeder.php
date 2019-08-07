@@ -11,6 +11,6 @@ class AdminsTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Admin::class, 2)->create();
+        factory(App\Models\Admin::class, 2)->create();
     }
 }
