@@ -105,6 +105,7 @@
                             <li><a href=""><i class="fa fa-circle-o"></i> Customers</a></li>
                             <li><a href=""><i class="fa fa-circle-o"></i> Reports</a></li>
                             <li><a href=""><i class="fa fa-circle-o"></i> Tasks</a></li>
+                            <li><a href=""><i class="fa fa-circle-o"></i> Departments</a></li>
                         </ul>
                     </li>
                 </ul>

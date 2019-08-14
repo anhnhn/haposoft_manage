@@ -20,6 +20,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::namespace('Admin')->group(function () {
     Route::resource('users', 'UserController');
+    Route::resource('departments', 'DepartmentController');
 });
 
 Route::get('/admin', function () {
