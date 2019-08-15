@@ -149,6 +149,9 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'department_id' => 'department\'s name',
+        'customer_id' => 'customer\'s name',
+    ],
 
 ];

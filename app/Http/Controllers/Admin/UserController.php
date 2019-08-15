@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Department;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
@@ -12,6 +13,7 @@ use Config;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\MessageBag;
 use Illuminate\Support\Facades\Hash;
+use phpDocumentor\Reflection\Project;
 
 class UserController extends Controller
 {
@@ -24,7 +26,9 @@ class UserController extends Controller
 
     public function create()
     {
-        return view('admin.user.create');
+        $departments = Department::all();
+        $data = ['departments' => $departments];
+        return view('admin.user.create', $data);
     }
 
     public function store(UserRequest $request)
@@ -51,8 +55,12 @@ class UserController extends Controller
 
     public function edit($id)
     {
+        $departments = Department::all();
         $user = User::findOrFail($id);
-        $data = ['user' => $user];
+        $data = [
+            'user' => $user,
+            'departments' => $departments
+        ];
         return view('admin.user.update', $data);
     }
 

@@ -23,14 +23,42 @@ class UserRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'name'=> 'bail|required|alpha|min:6|max:255',
-            'email' => 'bail|required|unique:users|email',
-            'avatar' => 'image',
-            'birth_day' => 'bail|required|date',
-            'phone' => 'required|numeric|digits_between:10,15',
-            'address' => 'required',
-            'password' => 'bail|required|min:6|max:30'
-        ];
+        switch ($this->method()) {
+            case 'GET':
+            case 'DELETE':
+            {
+                return [];
+            }
+            case 'POST':
+            {
+                return [
+                    'email' => 'required|email|unique:users,email|max:255',
+                    'password' => 'required|min:6',
+                    'name' => 'required|max:50',
+                    'address' => 'required',
+                    'phone' => 'required|numeric|digits_between:10,15',
+                    'department_id' => 'required|numeric',
+                    'avatar' => 'image',
+                    'birth_day' => 'bail|required|date'
+                ];
+            }
+            case 'PUT':
+            {
+                return [
+                    'email' => 'required|email|max:255|unique:users,email,'.$this->route('user'),
+                    'name' => 'required|max:50',
+                    'phone' => 'required|numeric|digits_between:10,15',
+                    'department_id' => 'required|numeric',
+                    'avatar' => 'image',
+                    'birth_day' => 'bail|required|date'
+                ];
+            }
+            case 'PATCH':
+            {
+                return [];
+            }
+            default:
+                break;
+        }
     }
 }
