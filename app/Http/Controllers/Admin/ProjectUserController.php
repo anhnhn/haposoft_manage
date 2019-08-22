@@ -10,6 +10,7 @@ use Config;
 use Illuminate\Database\Eloquent\Collection;
 use App\Models\Project;
 use App\Models\User;
+use test\Mockery\Adapter\Phpunit\BaseClassStub;
 
 class ProjectUserController extends Controller
 {
@@ -41,7 +42,19 @@ class ProjectUserController extends Controller
 
     public function store(Request $request)
     {
-
+        $project = Project::findOrFail($request->project_id);
+        $project->users()->attach($request->user_id,
+            [
+                'start_date' => $request->start_date,
+                'end_date' => $request->end_date
+            ]
+        );
+        $projects = Project::with(['users' => function ($query) {
+        }])->findOrFail($request->project_id);
+        $data = [
+            'projects' => $projects,
+        ];
+        return response()->json($data);
     }
 
     public function show($id)
