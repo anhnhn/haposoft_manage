@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CustomerRequest;
 
 class CustomerController extends Controller
 {
@@ -20,7 +21,7 @@ class CustomerController extends Controller
         return view('admin.customer.create');
     }
 
-    public function store(Request $request)
+    public function store(CustomerRequest $request)
     {
         $customer = $request->all();
         $customer['password'] = \Hash::make($request->password);
@@ -30,23 +31,28 @@ class CustomerController extends Controller
 
     public function show($id)
     {
-
+        $customer = Customer::findOrFail($id);
+        $data = [ 'customer' => $customer ];
+        return view('admin.customer.show', $data);
     }
 
     public function edit($id)
     {
         $customer = Customer::findOrFail($id);
-        $data = [ 'customer' => $customer ];
+        $data = ['customer' => $customer];
         return view('admin.customer.update', $data);
     }
 
-    public function update(Request $request, $id)
+    public function update(CustomerRequest $request, $id)
     {
-        //
+        $customer = Customer::findOrFail($id);
+        $customer->update($request->all());
+        return redirect()->route('customers.index')->with('message', __('messages.update_message'));
     }
 
     public function destroy($id)
     {
-        //
+        $customer = Customer::findOrFail($id)->delete();
+        return redirect()->route('customers.index')->with('message', __('messages.delete_message'));
     }
 }

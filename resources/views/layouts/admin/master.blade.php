@@ -91,10 +91,11 @@
                     </a>
                     <ul class="treeview-menu">
                         <li class="active"><a href="{{ route('users.index') }}"><i class="fa fa-circle-o"></i> Users</a></li>
+                        <li><a href="{{ route('departments.index') }}"><i class="fa fa-circle-o"></i> Departments</a></li>
                         <li><a href=""><i class="fa fa-circle-o"></i> Projects</a></li>
-                        <li><a href=""><i class="fa fa-circle-o"></i> Customers</a></li>
+                        <li><a href="{{ route('customers.index') }}"><i class="fa fa-circle-o"></i> Customers</a></li>
                         <li><a href=""><i class="fa fa-circle-o"></i> Reports</a></li>
-                        <li><a href=""><i class="fa fa-circle-o"></i> Tasks</a></li>
+                        <li><a href="{{ route('tasks.index') }}"><i class="fa fa-circle-o"></i> Tasks</a></li>
                     </ul>
                 </li>
             </ul>
@@ -137,3 +138,5 @@
 <script src="{{ asset("js/demo.js") }}"></script>
 <script src="{{ asset("js/dataTables.bootstrap.min.js") }}"></script>
 <script src="{{ asset("js/jquery.dataTables.min.js") }}"></script>
+<script src="{{ asset("admin/js/admin-department.js") }}"></script>
+<script src="{{ asset("admin/js/admin-task.js") }}"></script>

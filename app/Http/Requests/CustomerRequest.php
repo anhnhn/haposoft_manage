@@ -4,8 +4,13 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ProjectRequest extends FormRequest
+class CustomerRequest extends FormRequest
 {
+    /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
+     */
     public function authorize()
     {
         return true;
@@ -27,19 +32,20 @@ class ProjectRequest extends FormRequest
             case 'POST':
             {
                 return [
-                    'name' => 'required|max:100|unique:projects,name',
-                    'start_date' => 'required|date',
-                    'end_date' => 'required|date|after:start_date',
-                    'customer_id' => 'required|numeric',
+                    'email' => 'required|email|unique:customers,email|max:255',
+                    'password' => 'required|min:6',
+                    'name' => 'required|max:50',
+                    'address' => 'required',
+                    'phone' => 'required|numeric|digits_between:10,15',
                 ];
             }
             case 'PUT':
             {
                 return [
-                    'name' => 'required|max:100|unique:projects,name,' . $this->route('project'),
-                    'start_date' => 'required|date',
-                    'end_date' => 'required|date|after:start_date',
-                    'customer_id' => 'required|numeric'
+                    'email' => 'required|email|max:255|unique:customers,email,' . $this->route('customer'),
+                    'name' => 'required|max:50',
+                    'phone' => 'required|numeric|digits_between:10,15',
+                    'address' => 'required',
                 ];
             }
             case 'PATCH':

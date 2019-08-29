@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Department;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\DepartmentRequest;
 
 class DepartmentController extends Controller
 {
@@ -20,7 +21,7 @@ class DepartmentController extends Controller
         return view('admin.department.create');
     }
 
-    public function store(Request $request)
+    public function store(DepartmentRequest $request)
     {
         $department = $request->all();
         Department::create($request->all());
@@ -35,11 +36,11 @@ class DepartmentController extends Controller
     public function edit($id)
     {
         $department = Department::findOrFail($id);
-        $data = [ 'department' => $department ];
+        $data = ['department' => $department];
         return view('admin.department.update', $data);
     }
 
-    public function update(Request $request, $id)
+    public function update(DepartmentRequest $request, $id)
     {
         $department = Department::findOrFail($id);
         $department->update($request->all());

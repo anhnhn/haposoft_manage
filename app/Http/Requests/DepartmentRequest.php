@@ -4,8 +4,13 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ProjectRequest extends FormRequest
+class DepartmentRequest extends FormRequest
 {
+    /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
+     */
     public function authorize()
     {
         return true;
@@ -27,19 +32,13 @@ class ProjectRequest extends FormRequest
             case 'POST':
             {
                 return [
-                    'name' => 'required|max:100|unique:projects,name',
-                    'start_date' => 'required|date',
-                    'end_date' => 'required|date|after:start_date',
-                    'customer_id' => 'required|numeric',
+                    'name' => 'required|unique:departments,name',
                 ];
             }
             case 'PUT':
             {
                 return [
-                    'name' => 'required|max:100|unique:projects,name,' . $this->route('project'),
-                    'start_date' => 'required|date',
-                    'end_date' => 'required|date|after:start_date',
-                    'customer_id' => 'required|numeric'
+                    'name' => 'required|unique:departments,name,' . $this->route('department'),
                 ];
             }
             case 'PATCH':
