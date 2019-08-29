@@ -3,9 +3,9 @@
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 use Illuminate\Support\Str;
 use Faker\Generator as Faker;
-use App\Customer;
+use App\Models\Customer;
 
-$factory->define(\App\Customer::class, function (Faker $faker) {
+$factory->define(Customer::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,

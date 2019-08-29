@@ -129,8 +129,12 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'phone' => [
+            'numeric' => ' The phone number must be numerical value',
+            'digits_between:10,15' => 'The phone number must be between 10 and 15 digits'
+        ],
+        'avatar' => [
+            'image' => 'Upload an image file, ex: jpeg, png...'
         ],
     ],
 

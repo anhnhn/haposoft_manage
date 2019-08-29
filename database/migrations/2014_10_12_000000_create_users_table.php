@@ -22,6 +22,10 @@ class CreateUsersTable extends Migration
             $table->date('birth_day');
             $table->string('address');
             $table->string('phone');
+            $table->string('avatar')->default('images/default.jpg');
+            $table->string('role_name')->default('user');
+            $table->integer('department_id')->unsigned();
+            $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();
         });

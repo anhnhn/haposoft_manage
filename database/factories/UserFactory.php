@@ -1,7 +1,7 @@
 <?php
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-use App\User;
+use App\Models\User;
 use Illuminate\Support\Str;
 use Faker\Generator as Faker;
 
@@ -26,6 +26,7 @@ $factory->define(User::class, function (Faker $faker) {
         'birth_day' => $faker->date(),
         'address' => $faker->address,
         'created_at' => now(),
-        'phone' => $faker->phoneNumber
+        'phone' => $faker->phoneNumber,
+        'department_id' => App\Models\Department::all()->random()->id
     ];
 });

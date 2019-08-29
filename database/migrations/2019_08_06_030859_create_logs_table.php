@@ -21,6 +21,7 @@ class CreateLogsTable extends Migration
             $table->integer('user_id');
             $table->integer('project_id');
             $table->integer('customer_id');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

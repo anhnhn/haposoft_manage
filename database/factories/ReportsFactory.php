@@ -2,13 +2,13 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\Report;
+use App\Models\Report;
 use Faker\Generator as Faker;
 
-$factory->define(\App\Report::class, function (Faker $faker) {
+$factory->define(Report::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
         'content' => $faker->text,
-        'user_id' => App\User::all()->random()->id
+        'user_id' => App\Models\User::all()->random()->id
     ];
 });
