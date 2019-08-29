@@ -17,6 +17,3 @@ yarn-error.log
 /public/js
 /public/image
 /public/fonts
-/resources/views
-/app/Models
-/app/Http/Controllers/Auth
