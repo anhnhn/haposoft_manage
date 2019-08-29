@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Project extends Model
 {
     use SoftDeletes;
+
     protected $fillable = [
         'name', 'start_date', 'end_date', 'customer_id'
     ];
@@ -29,7 +30,7 @@ class Project extends Model
         return $this->hasMany(Task::class);
     }
 
-    public  function  logs()
+    public function logs()
     {
         return $this->hasMany(Log::class);
     }

@@ -9,7 +9,7 @@
                         <div class="box-header with-border">
                             <h3 class="box-title">Create User</h3>
                         </div>
-                        <form role="form" enctype="multipart/form-data" method="POST" action="{{ route('users.store') }}">
+                        <form role="form" method="POST" action="{{ route('users.store') }}" enctype="multipart/form-data">
                             @csrf
                             <div class="box-body">
                                 <div class="form-group">
@@ -54,11 +54,23 @@
                                     <div class="alert alert-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group col-xs-6">
                                     <label for="avatar">Choose avatar</label>
-                                    <input type="file" id="avatar" name="avatar" class="@error('avatar') is-invalid @enderror" value="{{old('avatar')}}">
+                                    <input type="file" id="avatar" name="avatar" class="@error('avatar') is-invalid @enderror" value="">
                                     <p class="help-block">Please chosse file</p>
                                     @error('avatar')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="form-group col-xs-6">
+                                    <label for="department">Department</label>
+                                    <select class="form-control col-xs-10 @error('department_id') is-invalid @enderror" name="department_id">
+                                        <option value="" disabled selected>Choose your option</option>
+                                        @foreach($departments as $department)
+                                            <option value="{{ $department->id }}">{{ $department->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('department_id')
                                     <div class="alert alert-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
