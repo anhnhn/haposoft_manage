@@ -28,13 +28,6 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label for="password">Password</label>
-                                    <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" value="{{ $user->password }}">
-                                    @error('password')
-                                        <div class="alert alert-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                                <div class="form-group">
                                     <label for="phone">Phone</label>
                                     <input type="text" class="form-control @error('phone') is-invalid @enderror" id="phone" name="phone" value="{{  $user->phone }}">
                                     @error('phone')
@@ -55,9 +48,25 @@
                                     <div class="alert alert-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group col-xs-6">
                                     <label for="avatar">Choose avatar</label>
                                     <input type="file" id="avatar" name="avatar">
+                                </div>
+                                <div class="form-group col-xs-6">
+                                    <label for="department">Department</label>
+                                    <select class="form-control col-xs-10 @error('department_id') is-invalid @enderror" name="department_id">
+                                        <option value="" disabled selected>Choose your option</option>
+                                        @foreach($departments as $department)
+                                            @if($user->department_id == $department->id)
+                                                <option value="{{ $department->id }}"  selected>{{ $department->name }}</option>
+                                            @else
+                                                <option value="{{ $department->id }}">{{ $department->name }}</option>
+                                            @endif
+                                        @endforeach
+                                    </select>
+                                    @error('department_id')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="box-footer">

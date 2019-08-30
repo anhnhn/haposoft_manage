@@ -1,0 +1,50 @@
+.users-table {
+  table-layout: fixed;
+  width: 100%;
+  white-space: nowrap;
+
+  td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.fix-witdh-name {
+  width: 15%;
+}
+.fix-witdh-mail {
+  width: 15%;
+}
+
+.fix-witdh-birth-day {
+  width: 10%;
+}
+
+.fix-witdh-addess {
+  width: 20%;
+}
+
+.fix-witdh-phone {
+  width: 10%;
+}
+
+.fix-witdh-choice {
+  width: 20%;
+}
+
+.fix-witdh-content {
+  width: 35%;
+}
+
+.fix-witdh-hour {
+  width: 5%;
+}
+
+.fix-witdh-user-name {
+  width: 10%;
+}
+
+.fix-witdh-project-name {
+  width: 10%;
+}
