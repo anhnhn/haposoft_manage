@@ -42,7 +42,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="content">Content</label>
-                                    <textarea class="form-control @error('phone') is-invalid @enderror" id="content" name="content" value="{{old('content')}}" rows="3" placeholder="Enter ..."></textarea>
+                                    <textarea class="form-control @error('content') is-invalid @enderror" id="content" name="content" value="{{old('content')}}" rows="3" placeholder="Enter ..."></textarea>
                                     @error('content')
                                     <div class="alert alert-danger">{{ $message }}</div>
                                     @enderror

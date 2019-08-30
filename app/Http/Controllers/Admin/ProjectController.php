@@ -21,7 +21,9 @@ class ProjectController extends Controller
     public function create()
     {
         $customers = Customer::all();
-        $data = ['customers' => $customers];
+        $data = [
+            'customers' => $customers
+        ];
         return view('admin.project.create', $data);
     }
 

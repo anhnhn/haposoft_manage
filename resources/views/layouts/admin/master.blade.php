@@ -14,7 +14,7 @@
 
     <title>@yield('title')</title>
 </head>
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-blue sidebar-mini set-height">
 <header class="main-header">
     <a href="index2.html" class="logo">
         <span class="logo-mini"><b>A</b>LT</span>
@@ -46,7 +46,16 @@
                                 <a href="#" class="btn btn-default btn-flat">Profile</a>
                             </div>
                             <div class="pull-right">
-                                <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                                <a class="btn btn-default btn-flat"
+                                   href="{{ route('logout') }}"
+                                   onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                    {{ __('Logout') }}
+                                </a>
+
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    @csrf
+                                </form>
                             </div>
                         </li>
                     </ul>
@@ -59,7 +68,7 @@
     </nav>
 </header>
 
-<div class="wrapper">
+<div class="wrapper set-height">
     <aside class="main-sidebar">
         <section class="sidebar">
             <div class="user-panel">
@@ -92,9 +101,9 @@
                     <ul class="treeview-menu">
                         <li class="active"><a href="{{ route('users.index') }}"><i class="fa fa-circle-o"></i> Users</a></li>
                         <li><a href="{{ route('departments.index') }}"><i class="fa fa-circle-o"></i> Departments</a></li>
-                        <li><a href=""><i class="fa fa-circle-o"></i> Projects</a></li>
+                        <li><a href="{{ route('projects.index') }}"><i class="fa fa-circle-o"></i> Projects</a></li>
                         <li><a href="{{ route('customers.index') }}"><i class="fa fa-circle-o"></i> Customers</a></li>
-                        <li><a href=""><i class="fa fa-circle-o"></i> Reports</a></li>
+                        <li><a href="{{ route('reports.index') }}"><i class="fa fa-circle-o"></i> Reports</a></li>
                         <li><a href="{{ route('tasks.index') }}"><i class="fa fa-circle-o"></i> Tasks</a></li>
                     </ul>
                 </li>

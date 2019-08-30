@@ -4,16 +4,20 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Project;
 use App\Models\Task;
+use App\Http\Requests\TaskRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Config;
+
 class TaskController extends Controller
 {
 
     public function index()
     {
         $tasks = Task::orderByDesc('project_id', 'desc')->paginate(config('variables.paginate'));
-        $data = [ 'tasks' => $tasks ];
+        $data = [
+            'tasks' => $tasks
+        ];
         return view('admin.task.index', $data);
     }
 
@@ -22,33 +26,57 @@ class TaskController extends Controller
         $projects = Project::with(['users' => function ($query) {
             $query->select('user_id', 'name')->get();
         }])->orderByDesc('id')->paginate(config('variables.paginate'));
-        $data = [ 'projects' => $projects ];
+        $data = [
+            'projects' => $projects
+        ];
         return view("admin.task.create", $data);
     }
 
-    public function store(Request $request)
+    public function store(TaskRequest $request)
     {
-
+        if (!$request->has('user_id')) {
+            $request['user_id'] = null;
+        }
+        $task = $request->all();
+        Task::create($task);
+        return redirect()->route('tasks.index')->with('message', __('messages.create_message'));
     }
 
     public function show($id)
     {
-        //
+        $task = Task::findOrFail($id);
+        $data = [
+            'task' => $task
+        ];
+        return view('admin.task.show', $data);
     }
 
     public function edit($id)
     {
-        //
+        $projects = Project::with(['users' => function ($query) {
+            $query->select('user_id', 'name')->get();
+        }])->orderByDesc('id')->paginate(config('variables.paginate'));
+        $task = Task::findOrFail($id);
+        $data = [
+            'task' => $task,
+            'projects' => $projects,
+        ];
+        return view('admin.task.update', $data);
     }
 
-    public function update(Request $request, $id)
+    public function update(TaskRequest $request, $id)
     {
-        //
+        $task = Task::findOrFail($id);
+        $task->update($request->all());
+        return redirect()->route('tasks.index')->with('message', __('messages.update_message'));
     }
 
     public function destroy($id)
     {
-        //
+        $task = Task::findOrFail($id);
+        $task->reports()->detach();
+        $task->delete();
+        return redirect()->route('tasks.index')->with('message', __('messages.delete_message'));
     }
 
     public function getUserByProjectId($id)
@@ -56,7 +84,9 @@ class TaskController extends Controller
         $project = Project::with(['users' => function ($query) {
             $query->select('user_id', 'name')->get();
         }])->findOrFail($id);
-        $data = [ 'project' => $project ];
+        $data = [
+            'project' => $project
+        ];
         return response()->json($data);
     }
 }

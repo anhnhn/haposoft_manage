@@ -152,6 +152,8 @@ return [
     'attributes' => [
         'department_id' => 'department\'s name',
         'customer_id' => 'customer\'s name',
+        'project_id' => 'project\'s name',
+        'user_id' => 'user\'s name'
     ],
 
 ];

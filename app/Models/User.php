@@ -14,7 +14,7 @@ class User extends Authenticatable
     use Notifiable;
 
     protected $fillable = [
-        'name', 'email', 'password', 'birth_day', 'address', 'phone', 'avatar', 'department_id'
+        'name', 'email', 'password', 'birth_day', 'address', 'phone', 'avatar', 'department_id', 'role_name'
     ];
 
     protected $dates = ['deleted_at'];

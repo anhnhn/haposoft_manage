@@ -42,7 +42,7 @@ class CustomerRequest extends FormRequest
             case 'PUT':
             {
                 return [
-                    'email' => 'required|email|max:255|unique:customers,email,' . $this->route('customer'),
+                    'email' => 'email|max:255|unique:customers,email,' . $this->route('customer'),
                     'name' => 'required|max:50',
                     'phone' => 'required|numeric|digits_between:10,15',
                     'address' => 'required',

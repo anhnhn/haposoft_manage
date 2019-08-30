@@ -45,10 +45,10 @@ class UserRequest extends FormRequest
             case 'PUT':
             {
                 return [
-                    'email' => 'required|email|max:255|unique:users,email,' . $this->route('user'),
+                    'email' => 'email|max:255|unique:users,email,' . $this->route('user'),
                     'name' => 'required|max:50',
                     'phone' => 'required|numeric|digits_between:10,15',
-                    'department_id' => 'required|numeric',
+                    'department_id' => 'numeric',
                     'avatar' => 'image',
                     'birth_day' => 'bail|required|date'
                 ];

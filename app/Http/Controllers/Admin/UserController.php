@@ -17,17 +17,26 @@ use phpDocumentor\Reflection\Project;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:admin');
+    }
+
     public function index()
     {
-        $users = User::orderBy('id', 'desc')->paginate(Config('variables.paginate'));
-        $data = ['users' => $users];
+        $users = User::orderBy('id', 'desc')->paginate(config('variables.paginate'));
+        $data = [
+            'users' => $users
+        ];
         return view('admin.user.index', $data);
     }
 
     public function create()
     {
         $departments = Department::all();
-        $data = ['departments' => $departments];
+        $data = [
+            'departments' => $departments
+        ];
         return view('admin.user.create', $data);
     }
 
