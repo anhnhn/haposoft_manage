@@ -5,6 +5,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <link rel="stylesheet" href="{{ asset("css/admin-tle-css.css") }}">
     <link rel="stylesheet" href="{{ asset("css/mycss.css") }}">
@@ -16,7 +17,7 @@
 </head>
 <body class="hold-transition skin-blue sidebar-mini set-height">
 <header class="main-header">
-    <a href="index2.html" class="logo">
+    <a href="{{ route('admins.dashboard') }}" class="logo">
         <span class="logo-mini"><b>A</b>LT</span>
         <span class="logo-lg"><b>Admin</b>LTE</span>
     </a>
@@ -29,22 +30,10 @@
             <ul class="nav navbar-nav">
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <img src="{{ asset("image/user2-160x160.jpg") }}" class="user-image" alt="User Image">
-                        <span class="hidden-xs">Alexander Pierce</span>
+                        <span class="hidden-xs">{{ Auth::user()['name'] }}</span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li class="user-header">
-                            <img src="{{ asset("image/user2-160x160.jpg") }}" class="img-circle" alt="User Image">
-
-                            <p>
-                                Alexander Pierce - Web Developer
-                                <small>Member since Nov. 2012</small>
-                            </p>
-                        </li>
                         <li class="user-footer">
-                            <div class="pull-left">
-                                <a href="#" class="btn btn-default btn-flat">Profile</a>
-                            </div>
                             <div class="pull-right">
                                 <a class="btn btn-default btn-flat"
                                    href="{{ route('logout') }}"
@@ -60,9 +49,6 @@
                         </li>
                     </ul>
                 </li>
-                <li>
-                    <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
-                </li>
             </ul>
         </div>
     </nav>
@@ -71,15 +57,6 @@
 <div class="wrapper set-height">
     <aside class="main-sidebar">
         <section class="sidebar">
-            <div class="user-panel">
-                <div class="pull-left image">
-                    <img src="{{ asset("image/user2-160x160.jpg") }}" class="img-circle" alt="User Image">
-                </div>
-                <div class="pull-left info">
-                    <p>Alexander Pierce</p>
-                    <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
-                </div>
-            </div>
             <form action="#" method="get" class="sidebar-form">
                 <div class="input-group">
                     <input type="text" name="q" class="form-control" placeholder="Search...">
@@ -92,11 +69,11 @@
             <ul class="sidebar-menu" data-widget="tree">
                 <li class="header">MAIN NAVIGATION</li>
                 <li class="active treeview">
-                    <a href="#">
+                    <a href="{{ route('admins.dashboard') }}">
                         <i class="fa fa-dashboard"></i> <span>Dashboard</span>
                         <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
                     </a>
                     <ul class="treeview-menu">
                         <li class="active"><a href="{{ route('users.index') }}"><i class="fa fa-circle-o"></i> Users</a></li>
@@ -105,6 +82,17 @@
                         <li><a href="{{ route('customers.index') }}"><i class="fa fa-circle-o"></i> Customers</a></li>
                         <li><a href="{{ route('reports.index') }}"><i class="fa fa-circle-o"></i> Reports</a></li>
                         <li><a href="{{ route('tasks.index') }}"><i class="fa fa-circle-o"></i> Tasks</a></li>
+                    </ul>
+                </li>
+                <li class="active treeview">
+                    <a href="#">
+                        <i class="fa fa-dashboard"></i> <span>Assign</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li class="active"><a href="{{ route('projectuser.index') }}"><i class="fa fa-circle-o"></i>Projects</a></li>
                     </ul>
                 </li>
             </ul>
@@ -149,3 +137,4 @@
 <script src="{{ asset("js/jquery.dataTables.min.js") }}"></script>
 <script src="{{ asset("admin/js/admin-department.js") }}"></script>
 <script src="{{ asset("admin/js/admin-task.js") }}"></script>
+<script src="{{ asset("admin/js/admin-project-user.js") }}"></script>

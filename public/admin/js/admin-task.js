@@ -1,9 +1,9 @@
 $(document).ready(function () {
     var baseUrl = window.location.origin;
 
-    $('#projectId').on('change', function () {
+    $('#taskProjectId').on('change', function () {
         $('#userId').empty();
-        var projectId = $('#projectId').val();
+        var projectId = $('#taskProjectId').val();
         $.ajax({
             headers:
                 {

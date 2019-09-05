@@ -4,7 +4,7 @@
     <div class="content-wrapper">
         <section class="content-header">
             <h1>
-                Profile User
+                Information Project
             </h1>
         </section>
         <section class="content">
@@ -14,27 +14,29 @@
                         <div class="col-xs-8 ">
                             <form>
                                 <div class="form-group d-flex">
-                                    <label for="email" class="col-xs-3 col-form-label">Email</label>
+                                    <label for="name" class="col-xs-3 col-form-label">Name</label>
                                     <div class="col-xs-10">
-                                        <input type="text" readonly class="form-control" value='{{ $user->email }}'>
+                                        <label type="text" readonly class="form-control" >
+                                            {{ $project->name }}
+                                        </label>
                                     </div>
                                 </div>
                                 <div class="form-group d-flex">
-                                    <label for="birth_day" class="col-xs-3 col-form-label">Birth Day</label>
+                                    <label for="birth_day" class="col-xs-3 col-form-label">Start Date</label>
                                     <div class="col-xs-10">
-                                        <input type="text" readonly class="form-control" value='{{ $user->birth_day }}'>
+                                        <input type="text" readonly class="form-control" value='{{ $project->start_date }}'>
                                     </div>
                                 </div>
                                 <div class="form-group d-flex">
-                                    <label for="address" class="col-xs-3 col-form-label">Addess</label>
+                                    <label for="address" class="col-xs-3 col-form-label">End Date</label>
                                     <div class="col-xs-10">
-                                        <input type="text" readonly class="form-control" value='{{ $user->address }}'>
+                                        <input type="text" readonly class="form-control" value='{{ $project->end_date }}'>
                                     </div>
                                 </div>
                                 <div class="form-group d-flex">
-                                    <label for="phone" class="col-xs-3 col-form-label">Phone</label>
+                                    <label for="phone" class="col-xs-3 col-form-label">Customer</label>
                                     <div class="col-xs-10">
-                                        <input type="text" readonly class="form-control" value='{{ $user->phone }}'>
+                                        <input type="text" readonly class="form-control" value='{{ $project->customer['name'] }}'>
                                     </div>
                                 </div>
                             </form>

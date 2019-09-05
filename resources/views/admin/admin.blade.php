@@ -8,7 +8,7 @@
                 <small>Control panel</small>
             </h1>
             <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-dashboard"></i>Home</a></li>
+                <li><a href="{{ route('admins.dashboard') }}"><i class="fa fa-dashboard"></i>Home</a></li>
                 <li class="active">Dashboard</li>
             </ol>
         </section>
@@ -24,7 +24,7 @@
                         <div class="icon">
                             <i class="ion ion-ios-book"></i>
                         </div>
-                        <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                        <a href="{{ route('projects.index') }}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <div class="col-lg-3 col-xs-6">
@@ -37,7 +37,7 @@
                         <div class="icon">
                             <i class="ion ion-ios-barcode"></i>
                         </div>
-                        <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                        <a href="{{ route('tasks.index') }}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <div class="col-lg-3 col-xs-6">
@@ -50,7 +50,7 @@
                         <div class="icon">
                             <i class="ion ion-person-add"></i>
                         </div>
-                        <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                        <a href="{{ route('users.index') }}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <div class="col-lg-3 col-xs-6">
@@ -63,7 +63,7 @@
                         <div class="icon">
                             <i class="ion ion-android-contact"></i>
                         </div>
-                        <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                        <a href="{{ route('customers.index') }}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
             </div>

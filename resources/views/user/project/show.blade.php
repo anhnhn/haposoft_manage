@@ -70,7 +70,7 @@
                                 <tr>
                                     <td>{{ $task->name }}</td>
                                     <td>{{ $task->content }} </td>
-                                    <td>{{ $task->user->name }} </td>
+                                    <td>{{ $task->user['name'] }} </td>
                                     <td>{{ $task->hours }} </td>
                                 </tr>
                             @endforeach

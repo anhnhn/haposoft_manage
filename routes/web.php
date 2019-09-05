@@ -25,6 +25,7 @@ Route::namespace('Admin')->group(function () {
         Route::get('/getProjectById/{projectId}', 'ProjectUserController@getProjectById');
         Route::get('/getUserByProjectId/{projectId}', 'TaskController@getUserByProjectId');
         Route::delete('/destroyUser/{userId}+{projectId}', 'ProjectUserController@destroyUser');
+        Route::get('/editUser/{userId}+{projectId}', 'ProjectUserController@editUser');
         Route::get('/getUserById/{departmentId}', 'ProjectUserController@getUserById');
     });
 });

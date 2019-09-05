@@ -63,7 +63,10 @@ class ProjectController extends Controller
 
     public function destroy($id)
     {
-        $project = Project::findOrFail($id)->delete();
+        $project = Project::findOrFail($id);
+        $project->users()->detach();
+        $project->tasks()->delete();
+        $project->delete();
         return redirect()->route('projects.index')->with('message', __('messages.delete_message'));
     }
 }

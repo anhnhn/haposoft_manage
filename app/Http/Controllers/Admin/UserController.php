@@ -88,7 +88,9 @@ class UserController extends Controller
 
     public function destroy($id)
     {
-        User::findOrFail($id)->delete();
+        $user = User::findOrFail($id);
+        $user->projects()->detach();
+        $user->delete();
         return redirect()->route('users.index')->with('message', __('messages.delete_message'));
     }
 }

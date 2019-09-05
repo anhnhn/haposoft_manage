@@ -59,12 +59,12 @@ class ProjectUserController extends Controller
 
     public function show($id)
     {
-
     }
 
     public function edit($id)
     {
 
+        return view('admin.project-user.edit');
     }
 
     public function update(Request $request, $id)
@@ -91,6 +91,18 @@ class ProjectUserController extends Controller
             ];
         }
         return response()->json($data);
+    }
+
+    public function editUser($userId, $projectId)
+    {
+        $project = Project::with(['users' => function ($query) {
+            $query->get();
+        }])->findOrFail($projectId);
+        $data = [
+            'project' => $project,
+            'userId' => $userId
+        ];
+        return view('admin.project_user.edit', $data);
     }
 
     public function destroyUser($userId, $projectId)

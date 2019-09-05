@@ -34,7 +34,7 @@
                                     @enderror
                                 </div>
                                 <div class="form-group col-xs-6">
-                                    <label for="phone">Customer</label>
+                                    <label for="customer">Customer</label>
                                     <select class="form-control col-xs-10 @error('customer_id') is-invalid @enderror" name="customer_id">
                                         <option value="-1" disabled selected>Choose your option</option>
                                         <option value="" selected>No Customer</option>
