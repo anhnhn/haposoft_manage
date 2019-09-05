@@ -14,7 +14,7 @@
                             <div class="box-body">
                                 <div class="form-group col-xs-6">
                                     <label for="project">Project</label>
-                                    <select class="form-control col-xs-10 @error('project_id') is-invalid @enderror" name="project_id" id="projectId">
+                                    <select class="form-control col-xs-10 @error('project_id') is-invalid @enderror" name="project_id" id="taskProjectId">
                                         <option value="" disabled selected>Choose your option</option>
                                         @foreach($projects as $project)
                                             <option value="{{ $project->id }}">{{ $project->name }}</option>
@@ -42,7 +42,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="content">Content</label>
-                                    <textarea class="form-control @error('phone') is-invalid @enderror" id="content" name="content" value="{{old('content')}}" rows="3" placeholder="Enter ..."></textarea>
+                                    <textarea class="form-control @error('content') is-invalid @enderror" id="content" name="content" value="{{old('content')}}" rows="3" placeholder="Enter ..."></textarea>
                                     @error('content')
                                     <div class="alert alert-danger">{{ $message }}</div>
                                     @enderror

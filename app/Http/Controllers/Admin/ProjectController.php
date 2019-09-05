@@ -21,7 +21,9 @@ class ProjectController extends Controller
     public function create()
     {
         $customers = Customer::all();
-        $data = ['customers' => $customers];
+        $data = [
+            'customers' => $customers
+        ];
         return view('admin.project.create', $data);
     }
 
@@ -61,7 +63,10 @@ class ProjectController extends Controller
 
     public function destroy($id)
     {
-        $project = Project::findOrFail($id)->delete();
+        $project = Project::findOrFail($id);
+        $project->users()->detach();
+        $project->tasks()->delete();
+        $project->delete();
         return redirect()->route('projects.index')->with('message', __('messages.delete_message'));
     }
 }

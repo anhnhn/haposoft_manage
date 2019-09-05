@@ -2,11 +2,11 @@ $(document).ready(function () {
 
     var baseUrl = window.location.origin;
 
-    $('#project_id').on('change', function () {
+    $('#projectId').on('change', function () {
         $('#tableAssign tbody').empty();
-        $('#user_id').empty();
+        $('#userId').empty();
         $('#paginate').empty();
-        var projectId = $('#project_id').val();
+        var projectId = $('#projectId').val();
         $.ajax({
             headers:
                 {
@@ -22,12 +22,11 @@ $(document).ready(function () {
                 $.each(users, function (i, user) {
                     htmlTable += `<tr>
                         <td>${project.name}</td>
-                        <td>${user.pivot.start_date}(u)</td>
-                        <td>${user.pivot.end_date}(u)</td>
+                        <td>${user.pivot.start_date}</td>
+                        <td>${user.pivot.end_date}</td>
                         <td>${user.name}</td>
                         <td class="d-flex">
-                            <a href="" class="fa fa-search btn btn-info" role="button" title="Show"></a>
-                            <button class="fa fa-edit btn-warning btn" role="button" type="submit" title="Edit" value="${user.id}"></button>
+                            <button class="fa fa-edit btn-warning btn update-user" role="button" type="submit" title="Edit" value="${user.id}"></button>
                             <button class="fa fa-remove btn-danger btn deleteUser" role="button" type="submit" title="Delete" value="${user.id}"></button>
                         </td>
                         </tr>`;
@@ -35,7 +34,7 @@ $(document).ready(function () {
                 });
 
                 $('#tableAssign').append(htmlTable);
-                $('#user_id').append(htmlSelect);
+                $('#userId').append(htmlSelect);
             },
             error: function (e) {
             }
@@ -44,7 +43,7 @@ $(document).ready(function () {
 
     $('#tableAssign tbody').on('click', '.deleteUser', function () {
         if (confirm("Delete User?")) {
-            var projectId = $('#project_id').val();
+            var projectId = $('#projectId').val();
             var userId = $(this).attr('value');
             var node = this;
             $.ajax({
@@ -56,7 +55,7 @@ $(document).ready(function () {
                 url: baseUrl + '/haposoft_manage/public/admin/ajax/destroyUser/' + userId + '+' + projectId,
                 success: function (data) {
                     $(node).closest("tr").remove();
-                    if($('#department_id').val(-1)) {
+                    if($('#departmentId').val(-1)) {
                         $('#user_id option[value=' + userId + ']').remove();
                     }
                 },
@@ -66,10 +65,29 @@ $(document).ready(function () {
         }
     });
 
-    $('#department_id').on('change', function () {
-        $('#user_id').empty();
+    $('#tableAssign tbody').on('click', '.update-user', function () {
+            var projectId = $('#projectId').val();
+            var userId = $(this).attr('value');
+            console.log(userId);
+            $.ajax({
+                headers:
+                    {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                type: 'GET',
+                url: baseUrl + '/haposoft_manage/public/admin/ajax/editUser/' + userId + '+' + projectId,
+                success: function (data) {
+
+                },
+                error: function (e) {
+                }
+            });
+    });
+
+    $('#departmentId').on('change', function () {
+        $('#userId').empty();
         $('#paginate').empty();
-        var departmentId = $('#department_id').val();
+        var departmentId = $('#departmentId').val();
         $.ajax({
             headers:
                 {
@@ -83,17 +101,17 @@ $(document).ready(function () {
                 $.each(users, function (i, user) {
                     htmlSelect += `<option value="${user.id}">${user.name}</option>`;
                 });
-                $('#user_id').append(htmlSelect);
+                $('#userId').append(htmlSelect);
             },
             error: function (e) {
             }
         });
     });
 
-    $('#addUser').on('click', function (e) {
+    $('#assign').on('click', function (e) {
         e.preventDefault();
         var formData = new FormData($('form#formAddUser')[0]);
-        var projectId = $('#project_id').val();
+        var projectId = $('#projectId').val();
 
         $.ajax({
             headers:
@@ -106,8 +124,9 @@ $(document).ready(function () {
             contentType: false,
             data: formData,
             success: function (data) {
-                $('#user_id').empty();
-                $('#department_id').val(-1);
+                console.log(data);
+                $('#userId').empty();
+                $('#departmentId').val(-1);
                 var htmlTable = '';
                 var htmlSelect = '';
                 var project = data.projects;
@@ -115,20 +134,21 @@ $(document).ready(function () {
                 var user = users[users.length-1];
                     htmlTable += `<tr>
                         <td>${project.name}</td>
-                        <td>${user.pivot.start_date}(u)</td>
-                        <td>${user.pivot.end_date}(u)</td>
+                        <td>${user.pivot.start_date}
+                        </td>
+                        <td>${user.pivot.end_date}</td>
                         <td>${user.name}</td>
                         <td class="d-flex">
-                            <a href="" class="fa fa-search btn btn-info" role="button" title="Show"></a>
-                            <a href="" class="fa fa-edit btn-warning btn" role="button" title="Edit"></a>
-                            <button class="fa fa-remove btn-danger btn deleteUser" role="button" type="submit" title="Delete" value="${user.id}"></button>
+                            <button class="fa fa-edit btn-warning btn" role="button" type="submit" title="Update" value="${user.id}"></button>
+                            <button class="fa fa-remove btn-danger btn deteUser" role="button" type="submit" title="Delete" value="${user.id}"></button>
+                            
                         </td>
                         </tr>`;
                 $.each(users, function (i, user) {
                     htmlSelect += `<option value="${user.id}">${user.name}</option>`;
                 });
                 $('#tableAssign').append(htmlTable);
-                $('#user_id').append(htmlSelect);
+                $('#userId').append(htmlSelect);
             },
             error: function (e) {
             }

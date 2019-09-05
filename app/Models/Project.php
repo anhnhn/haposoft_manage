@@ -17,7 +17,7 @@ class Project extends Model
 
     public function users()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class)->withPivot('start_date', 'end_date')->withTimestamps();
     }
 
     public function customer()

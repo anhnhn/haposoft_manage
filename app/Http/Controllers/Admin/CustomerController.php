@@ -9,10 +9,13 @@ use App\Http\Requests\CustomerRequest;
 
 class CustomerController extends Controller
 {
+
     public function index()
     {
         $customers = Customer::orderBy('id', 'desc')->paginate(Config('variables.paginate'));
-        $data = ['customers' => $customers];
+        $data = [
+            'customers' => $customers,
+        ];
         return view('admin.customer.index', $data);
     }
 
@@ -32,14 +35,18 @@ class CustomerController extends Controller
     public function show($id)
     {
         $customer = Customer::findOrFail($id);
-        $data = [ 'customer' => $customer ];
+        $data = [
+            'customer' => $customer
+        ];
         return view('admin.customer.show', $data);
     }
 
     public function edit($id)
     {
         $customer = Customer::findOrFail($id);
-        $data = ['customer' => $customer];
+        $data = [
+            'customer' => $customer
+        ];
         return view('admin.customer.update', $data);
     }
 

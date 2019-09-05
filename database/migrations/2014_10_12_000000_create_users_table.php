@@ -24,7 +24,7 @@ class CreateUsersTable extends Migration
             $table->string('phone');
             $table->string('avatar')->default('images/default.jpg');
             $table->string('role_name')->default('user');
-            $table->integer('department_id')->unsigned();
+            $table->integer('department_id')->unsigned()->nullable();
             $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();

@@ -12,7 +12,9 @@ class DepartmentController extends Controller
     public function index()
     {
         $departments = Department::orderBy('id', 'desc')->paginate(Config('variables.paginate'));
-        $data = ['departments' => $departments];
+        $data = [
+            'departments' => $departments
+        ];
         return view('admin.department.index', $data);
     }
 
@@ -36,7 +38,9 @@ class DepartmentController extends Controller
     public function edit($id)
     {
         $department = Department::findOrFail($id);
-        $data = ['department' => $department];
+        $data = [
+            'department' => $department
+        ];
         return view('admin.department.update', $data);
     }
 
@@ -49,7 +53,13 @@ class DepartmentController extends Controller
 
     public function destroy($id)
     {
-        $department = Department::findOrFail($id)->delete();
+        $department = Department::findOrFail($id);
+        foreach ($department->users()->get() as $user)
+        {
+            $user['department_id'] = null;
+            $user->update();
+        }
+        $department->delete();
         return redirect()->route('departments.index')->with('message', __('messages.delete_message'));
     }
 }
