@@ -51,6 +51,7 @@
                                 <div class="form-group col-xs-6">
                                     <label for="avatar">Choose avatar</label>
                                     <input type="file" id="avatar" name="avatar">
+                                    <img id="image" src="{{ asset($url) }}" alt="your image" />
                                 </div>
                                 <div class="form-group col-xs-6">
                                     <label for="department">Department</label>

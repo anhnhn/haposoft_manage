@@ -4,11 +4,7 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
-Auth::routes([
-    'register' => false,
-    'reset' => false,
-    'verify' => false,
-]);
+Auth::routes();
 
 Route::namespace('Admin')->group(function () {
     Route::prefix('admin')->middleware('auth:admin')->group(function () {
@@ -24,9 +20,10 @@ Route::namespace('Admin')->group(function () {
     Route::prefix('admin/ajax')->group(function () {
         Route::get('/getProjectById/{projectId}', 'ProjectUserController@getProjectById');
         Route::get('/getUserByProjectId/{projectId}', 'TaskController@getUserByProjectId');
-        Route::delete('/destroyUser/{userId}+{projectId}', 'ProjectUserController@destroyUser');
-        Route::get('/editUser/{userId}+{projectId}', 'ProjectUserController@editUser');
+        Route::delete('/destroyUser/{userId}+{projectId}+{startDate}+{endDate}', 'ProjectUserController@destroyUser');
+        Route::get('/editUser/{userId}+{projectId}+{startDate}+{endDate}', 'ProjectUserController@editUser');
         Route::get('/getUserById/{departmentId}', 'ProjectUserController@getUserById');
+        Route::get('/editProjectUser/{userId}+{projectId}+{startDate}+{endDate}', 'ProjectUserController@editProjectUser')->name('projectUser.edit');
     });
 });
 
@@ -66,3 +63,4 @@ Route::prefix('admin')->group(function () {
     Route::post('/login', 'Auth\AdminLoginController@login')->name('admins.login.submit');
     Route::get('/logout', 'Auth\AdminLoginController@logout')->name('admins.logout');
 });
+

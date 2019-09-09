@@ -97,3 +97,19 @@
 .set-height {
   min-height: 600px !important;
 }
+
+.error {
+  border: 1px solid red;
+  width: 200px;
+  height: 200px;
+}
+
+#image {
+  width: 100px;
+  height: 100px;
+  border-radius: 2px;
+}
+
+.set-padding-top {
+  padding-top: 20px;
+}

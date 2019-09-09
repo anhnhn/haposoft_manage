@@ -33,13 +33,19 @@ class ProjectController extends Controller
 
     public function show($id)
     {
+        $customerLogin = Auth::user();
         $project = Project::findOrFail($id);
-        $users = $project->users()->paginate(config('variables.paginate'));
-        $data = [
-            'project' => $project,
-            'users' => $users
-        ];
-        return view('customer.project.show', $data);
+        if ($customerLogin->can('viewProject', $project)) {
+            $users = $project->users()->paginate(config('variables.paginate'));
+            $data = [
+                'project' => $project,
+                'users' => $users
+            ];
+            return view('customer.project.show', $data);
+        } else {
+            return abort('401');
+        }
+
     }
 
     public function edit($id)

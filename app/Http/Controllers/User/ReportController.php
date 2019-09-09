@@ -32,7 +32,7 @@ class ReportController extends Controller
     public function show($id)
     {
         $report = Report::findOrFail($id);
-        $tasks  = $report->tasks()->get();
+        $tasks = $report->tasks()->get();
         $data = [
             'report' => $report,
             'tasks' => $tasks
@@ -42,15 +42,20 @@ class ReportController extends Controller
 
     public function edit($id)
     {
+        $userLogin = Auth::user();
         $report = Report::findOrFail($id);
-        $tasks = $report->tasks()->get();
-        $listTaskUser = Auth::user()->tasks;
-        $data = [
-            'report' => $report,
-            'tasks' => $tasks,
-            'listTaskUser' => $listTaskUser
-        ];
-        return view('user.report.update', $data);
+        if ($userLogin->can('updateReport', $report)) {
+            $tasks = $report->tasks()->get();
+            $listTaskUser = Auth::user()->tasks;
+            $data = [
+                'report' => $report,
+                'tasks' => $tasks,
+                'listTaskUser' => $listTaskUser
+            ];
+            return view('user.report.update', $data);
+        } else {
+            return abort('401');
+        }
     }
 
     public function update(ReportRequest $request, $id)

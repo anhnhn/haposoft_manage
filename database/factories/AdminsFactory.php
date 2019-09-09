@@ -10,7 +10,7 @@ $factory->define(Admin::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,
-        'password' => bcrypt('password'),
+        'password' => bcrypt('123456'),
         'remember_token' => Str::random(10)
     ];
 });

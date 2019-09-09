@@ -17,11 +17,6 @@ use phpDocumentor\Reflection\Project;
 
 class UserController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth:admin');
-    }
-
     public function index()
     {
         $users = User::orderBy('id', 'desc')->paginate(config('variables.paginate'));
@@ -66,9 +61,11 @@ class UserController extends Controller
     {
         $departments = Department::all();
         $user = User::findOrFail($id);
+        $url = $user->getUrlAttribute($user->avatar);
         $data = [
             'user' => $user,
-            'departments' => $departments
+            'departments' => $departments,
+            'url' => $url
         ];
         return view('admin.user.update', $data);
     }

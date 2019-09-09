@@ -61,6 +61,7 @@
                                 </div>
                                 <div class="form-group col-6">
                                     <input type="hidden" id="userId" name="user_id" value="{{ Auth::user()->id }}">
+                                    <input type="hidden" value="{{ $report->id }}" id="reportId" name="report_id">
                                 </div>
                             </div>
                             <div class="">

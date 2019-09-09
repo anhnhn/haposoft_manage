@@ -55,10 +55,12 @@
                                         <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group border col-6">
                                         <label for="avatar">Choose avatar</label>
-                                        <input type="file" id="avatar" name="avatar">
+                                        <input type="file" id="avatar" name="avatar" value="{{ $user->avatar }}">
+                                        <img id="image" src="{{ asset($url) }}" alt="your image" />
                                     </div>
+                                    <input type="hidden" value="{{ $user->id }}" id="hiddenInput">
                                 </div>
                                 <div class="">
                                     <button type="submit" class="btn btn-primary">Update</button>

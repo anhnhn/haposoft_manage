@@ -6,6 +6,7 @@ use App\Models\Customer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CustomerRequest;
+use Illuminate\Support\Facades\Auth;
 
 class CustomerController extends Controller
 {
@@ -36,10 +37,15 @@ class CustomerController extends Controller
     public function edit($id)
     {
         $customer = Customer::findOrFail($id);
-        $data = [
-            'customer' => $customer,
-        ];
-        return view('customer.update', $data);
+        $customerLogin = Auth::user();
+        if ($customerLogin->can('update', $customer)) {
+            $data = [
+                'customer' => $customer,
+            ];
+            return view('customer.update', $data);
+        } else {
+            return abort('401');
+        }
     }
 
     public function update(CustomerRequest $request, $id)

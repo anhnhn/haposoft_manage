@@ -20,10 +20,10 @@ class ReportsTableSeeder extends Seeder
     public function run()
     {
         $tasks = App\Models\Task::all();
-        factory(App\Models\Report::class, 30)->create();
+        factory(App\Models\Report::class, 50)->create();
         App\Models\Report::all()->each(function ($report) use ($tasks) {
             $report->tasks()->attach( $tasks->random()->id,
-                ['report_id' => $this->faker->numberBetween(1, 30)]
+                ['report_id' => $this->faker->numberBetween(1, 50)]
             );
         });
     }

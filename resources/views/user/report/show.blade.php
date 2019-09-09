@@ -35,7 +35,7 @@
                                  <div class="form-group d-flex">
                                      <label for="date" class="col-4 form-label">Date</label>
                                      <div class="col-6">
-                                         <label for="name" class="form-label">{{ $report->created_at }}</label>
+                                         <label for="name" class="form-label">{{ date('d-m-Y', strtotime($report->created_at)) }}</label>
                                      </div>
                                  </div>
                                  <div class="form-group d-flex">
