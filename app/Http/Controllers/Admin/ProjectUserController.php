@@ -61,8 +61,14 @@ class ProjectUserController extends Controller
                 'projects' => $projects,
                 'message' => 'Assign successfully'
             ];
-            return response()->json($data);
         }
+        else
+        {
+            $data = [
+                'message' => 'Time overlaps'
+            ];
+        }
+        return response()->json($data);
     }
 
     public function show($id)
@@ -155,6 +161,9 @@ class ProjectUserController extends Controller
         $data2 = collect([]);
         foreach ($data1 as $user) {
             if ($startDate > $user->start_date && $endDate < $user->end_date) {
+                $data2[] = $user;
+            }
+            elseif($startDate < $user->start_date && $endDate > $user->end_date) {
                 $data2[] = $user;
             }
         };

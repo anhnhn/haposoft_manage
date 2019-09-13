@@ -8,10 +8,9 @@
                 <div class="box">
                     <div class="box-header d-flex ">
                         <h3 class="box-title">List Users</h3>
-                        <form class="form-inline col-xs-7 text-center">
-                            <i class="fa fa-search" aria-hidden="true"></i>
-                            <input class="form-control" type="text" placeholder="Search"
-                                   aria-label="Search">
+                        <form class="form-inline col-xs-7 text-center" method="GET" action="{{ route('users.search') }}" id="formSearchUser">
+                            <input class="form-control" type="text" placeholder="Search" name="user_name" value="{{ request('user_name') }}">
+                            <button class="fa fa-search btn-primary btn" role="button" title="search" id="searchUser"></button>
                         </form>
                         <div class="col-xs-4 text-right">
                             <a href="{{ route('users.create') }}" class="btn btn-info" role="button">Create</a>
@@ -48,7 +47,6 @@
                                         {{ method_field('DELETE') }}
                                         <button class="fa fa-remove btn-danger btn" role="button" title="Delete"></button>
                                     </form>
-
                                 </td>
                             </tr>
                             @endforeach
@@ -65,7 +63,7 @@
                             </tfoot>
                         </table>
                         <div class="col-12 text-center">
-                            {{ $users->links() }}
+                            {{ $users->appends($_GET)->links() }}
                         </div>
                     </div>
                 </div>

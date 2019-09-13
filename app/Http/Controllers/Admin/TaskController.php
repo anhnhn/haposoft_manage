@@ -89,4 +89,22 @@ class TaskController extends Controller
         ];
         return response()->json($data);
     }
+
+    public function search(Request $request)
+    {
+        if($request->task_name == null)
+        {
+            return redirect()->route('tasks.index');
+        }
+        else
+        {
+            $task_name = $request->task_name;
+            $tasks = Task::where('name', 'like', '%' . $task_name . '%')->orderByDesc('id')->paginate(config('variables.paginate'));
+            $data = [
+                'tasks' => $tasks,
+                'taskName' => $task_name
+            ];
+            return view('admin.task.index', $data);
+        }
+    }
 }

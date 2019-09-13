@@ -130,16 +130,17 @@ $(document).ready(function () {
             contentType: false,
             data: formData,
             success: function (data) {
-                $('#userId').empty();
-                $('#departmentId').val(-1);
-                var htmlTable = '';
-                var htmlSelect = '';
-                var project = data.projects;
-                var users = data.projects.users;
-                var user = users[users.length-1];
-                var usersDeduplicate = deduplicate(users);
-                var message = data.message;
-                alert (message);
+                if(data.projects != null) {
+                    $('#userId').empty();
+                    $('#departmentId').val(-1);
+                    var htmlTable = '';
+                    var htmlSelect = '';
+                    var project = data.projects;
+                    var users = data.projects.users;
+                    var user = users[users.length-1];
+                    var usersDeduplicate = deduplicate(users);
+                    var message = data.message;
+                    alert (message);
                     htmlTable += `<tr>
                         <td>${project.name}</td>
                         <td class="start-date-user">${user.pivot.start_date}</td>
@@ -150,14 +151,22 @@ $(document).ready(function () {
                             <button class="fa fa-remove btn-danger btn delete-user" role="button" type="submit" title="Delete" value="${user.id}"></button>
                         </td>
                         </tr>`;
-                $.each(usersDeduplicate, function (i, user) {
-                    htmlSelect += `<option value="${user.id}">${user.name}</option>`;
-                });
-                $('#tableAssign').append(htmlTable);
-                $('#userId').append(htmlSelect);
+                    $.each(usersDeduplicate, function (i, user) {
+                        htmlSelect += `<option value="${user.id}">${user.name}</option>`;
+                    });
+                    $('#tableAssign').append(htmlTable);
+                    $('#userId').append(htmlSelect);
+                }
+                else {
+                    $('.alert-danger').remove();
+                    var htmlError = '';
+                    htmlError += `<h4 class="alert alert-danger">${data.message}</h4>`;
+                    $('#showMessage').append(htmlError);
+                    $('.alert-danger').fadeIn().delay(5000).fadeOut();
+                }
+
             },
             error: function (data) {
-                console.log(data);
                 if (data.status === 422) {
                     $('.form-control').removeClass('is-invalid');
                     $('.alert-danger').remove();
@@ -168,7 +177,7 @@ $(document).ready(function () {
                         element.addClass('is-invalid');
                         element.after(`<div class="alert alert-danger">${errors[keys_errors[i]][0]}</div>`);
                     }
-                    $('.alert-danger').fadeIn().delay(5000).fadeOut();
+                    $('.alert-danger').fadeIn().delay(3000).fadeOut();
                 }
                 if (data.status === 404) {
                     $('#projectId').removeClass('is-invalid');

@@ -8,10 +8,9 @@
                     <div class="box">
                         <div class="box-header d-flex ">
                             <h3 class="box-title"> Tasks</h3>
-                            <form class="form-inline col-xs-7 text-center">
-                                <i class="fa fa-search" aria-hidden="true"></i>
-                                <input class="form-control" type="text" placeholder="Search"
-                                       aria-label="Search">
+                            <form class="form-inline col-xs-7 text-center" method="GET" action="{{ route('tasks.search') }}" id="formSearchTask">
+                                <input class="form-control" type="text" placeholder="Search" name="task_name" value="{{ request('task_name') }}">
+                                <button class="fa fa-search btn-primary btn" role="button" title="search" id="searchTask"></button>
                             </form>
                             <div class="col-xs-4 text-right">
                                 <a href="{{ route('tasks.create') }}" class="btn btn-info" role="button">Create</a>
@@ -65,7 +64,7 @@
                                 </tfoot>
                             </table>
                             <div class="col-12 text-center">
-                                {{ $tasks->links() }}
+                                {{ $tasks->appends($_GET)->links() }}
                             </div>
                         </div>
                     </div>

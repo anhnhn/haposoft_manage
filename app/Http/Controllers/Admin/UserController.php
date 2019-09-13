@@ -90,4 +90,22 @@ class UserController extends Controller
         $user->delete();
         return redirect()->route('users.index')->with('message', __('messages.delete_message'));
     }
+
+    public function search(Request $request)
+    {
+        if($request->user_name == null)
+        {
+            return redirect()->route('users.index');
+        }
+        else
+        {
+            $user_name = $request->user_name;
+            $users = User::where('name', 'like', '%' . $user_name . '%')->orderByDesc('id')->paginate(config('variables.paginate'));
+            $data = [
+                'users' => $users,
+                'userName' => $user_name
+            ];
+            return view('admin.user.index', $data);
+        }
+    }
 }

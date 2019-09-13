@@ -55,4 +55,22 @@ class ReportController extends Controller
         $report->delete();
         return redirect()->route('reports.index')->with('message', __('messages.delete_message'));
     }
+
+    public function search(Request $request)
+    {
+        if($request->report_name == null)
+        {
+            return redirect()->route('reports.index');
+        }
+        else
+        {
+            $report_name = $request->report_name;
+            $reports = Report::where('name', 'like', '%' . $report_name . '%')->orderByDesc('id')->paginate(config('variables.paginate'));
+            $data = [
+                'reports' => $reports,
+                'reportName' => $report_name
+            ];
+            return view('admin.report.index', $data);
+        }
+    }
 }

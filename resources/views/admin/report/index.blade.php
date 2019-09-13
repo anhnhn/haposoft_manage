@@ -8,10 +8,9 @@
                     <div class="box">
                         <div class="box-header d-flex ">
                             <h3 class="box-title">List Reports</h3>
-                            <form class="form-inline col-xs-7 text-center">
-                                <i class="fa fa-search" aria-hidden="true"></i>
-                                <input class="form-control" type="text" placeholder="Search"
-                                       aria-label="Search">
+                            <form class="form-inline col-xs-7 text-center" method="GET" action="{{ route('reports.search') }}" id="formSearchReport">
+                                <input class="form-control" type="text" placeholder="Search" name="report_name" value="{{ request('report_name') }}">
+                                <button class="fa fa-search btn-primary btn" role="button" title="search" id="searchReport"></button>
                             </form>
                         </div>
                         <div class="box-body">
@@ -48,13 +47,13 @@
                                 <tr>
                                     <th>Name</th>
                                     <th>Content</th>
-                                    <th>User Nảme</th>
+                                    <th>User Name</th>
                                     <th>Choice</th>
                                 </tr>
                                 </tfoot>
                             </table>
                             <div class="col-12 text-center">
-                                {{ $reports->links() }}
+                                {{ $reports->appends($_GET)->links() }}
                             </div>
                         </div>
                     </div>

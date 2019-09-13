@@ -16,6 +16,12 @@ Route::namespace('Admin')->group(function () {
         Route::resource('customers', 'CustomerController');
         Route::resource('reports', 'ReportController');
         Route::get('/home', 'AdminController@index')->name('admins.dashboard');
+        Route::get('/user/search', 'UserController@search')->name('users.search');
+        Route::get('/department/search', 'DepartmentController@search')->name('departments.search');
+        Route::get('/customer/search', 'CustomerController@search')->name('customers.search');
+        Route::get('/task/search', 'TaskController@search')->name('tasks.search');
+        Route::get('/report/search', 'ReportController@search')->name('reports.search');
+        Route::get('/project/search', 'ProjectController@search')->name('projects.search');
     });
     Route::prefix('admin/ajax')->group(function () {
         Route::get('/getProjectById/{projectId}', 'ProjectUserController@getProjectById');

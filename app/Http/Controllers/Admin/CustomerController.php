@@ -62,4 +62,22 @@ class CustomerController extends Controller
         $customer = Customer::findOrFail($id)->delete();
         return redirect()->route('customers.index')->with('message', __('messages.delete_message'));
     }
+
+    public function search(Request $request)
+    {
+        if($request->customer_name == null)
+        {
+            return redirect()->route('customers.index');
+        }
+        else
+        {
+            $customer_name = $request->customer_name;
+            $customers = Customer::where('name', 'like', '%' . $customer_name . '%')->orderByDesc('id')->paginate(config('variables.paginate'));
+            $data = [
+                'customers' => $customers,
+                'customerName' => $customer_name
+            ];
+            return view('admin.customer.index', $data);
+        }
+    }
 }
