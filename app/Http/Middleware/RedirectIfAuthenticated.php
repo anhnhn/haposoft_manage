@@ -26,7 +26,8 @@ class RedirectIfAuthenticated
                     return redirect()->route('customers.home');
                     break;
                 default:
-                    return redirect()->route('home');
+                    return redirect()->route('user.home');
+                    break;
             }
         }
         return $next($request);

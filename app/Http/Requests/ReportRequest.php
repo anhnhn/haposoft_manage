@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Report;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ReportRequest extends FormRequest
@@ -23,6 +24,7 @@ class ReportRequest extends FormRequest
      */
     public function rules()
     {
+
         switch ($this->method()) {
             case 'GET':
             case 'DELETE':
@@ -32,7 +34,7 @@ class ReportRequest extends FormRequest
             case 'POST':
             {
                 return [
-                    'name' => 'required|max:100|unique:reports,name',
+                    'name' => 'required|max:100|unique:reports,name,',
                     'content' => 'required|max:1000',
                     'user_id' => 'required|numeric',
                 ];
@@ -40,7 +42,7 @@ class ReportRequest extends FormRequest
             case 'PUT':
             {
                 return [
-                    'name' => 'required|max:100|unique:reports,name,' . $this->route('report'),
+                    'name' => 'max:100|unique:reports,name,' . $this->input('report_id'),
                     'content' => 'required|max:1000',
                     'user_id' => 'required|numeric',
                 ];

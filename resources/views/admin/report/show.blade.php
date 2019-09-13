@@ -21,7 +21,7 @@
                             <div class="form-group d-flex">
                                 <label for="Date" class="col-xs-4 col-form-label">Date</label>
                                 <div class="col-xs-8">
-                                    <label for="name" class="col-form-label">{{ $report->created_at }}</label>
+                                    <label for="name" class="col-form-label">{{ date('d-m-Y', strtotime($report->created_at)) }}</label>
                                 </div>
                             </div>
                             <div class="form-group d-flex">

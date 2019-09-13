@@ -18,14 +18,9 @@
                     <div class="card-header">Projects</div>
                     <div class="card-body">
                         @if (Session::has('message'))
-                            <h3 class="text-danger">{{ Session::get('message') }}</h3>
+                            <h3 class="text-danger alert-success">{{ Session::get('message') }}</h3>
                         @endif
-                        @if (session('status'))
-                            <div class="alert alert-success" role="alert">
-                                {{ session('status') }}
-                            </div>
-                        @endif
-                            <table class="table table-bordered">
+                                <table class="table table-bordered">
                                 <thead>
                                 <tr>
                                     <th scope="col">Name Project</th>

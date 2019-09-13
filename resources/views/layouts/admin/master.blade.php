@@ -138,3 +138,4 @@
 <script src="{{ asset("admin/js/admin-department.js") }}"></script>
 <script src="{{ asset("admin/js/admin-task.js") }}"></script>
 <script src="{{ asset("admin/js/admin-project-user.js") }}"></script>
+<script src="{{ asset("admin/js/file-input.js") }}"></script>

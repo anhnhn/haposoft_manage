@@ -19,7 +19,7 @@
                         </div>
                         <div class="box-body">
                             @if (Session::has('message'))
-                                <h3 class="text-danger">{{ Session::get('message') }}</h3>
+                                <h3 class="text-danger alert-success">{{ Session::get('message') }}</h3>
                             @endif
                             <table id="example2" class="table table-bordered table-hover users-table">
                                 <thead>
@@ -35,8 +35,8 @@
                                 @foreach($projects as $project)
                                     <tr>
                                         <td>{{ $project->name }}</td>
-                                        <td>{{ $project->start_date }}</td>
-                                        <td>{{ $project->end_date }}</td>
+                                        <td>{{ date('d-m-Y', strtotime($project->start_date)) }}</td>
+                                        <td>{{ date('d-m-Y', strtotime($project->end_date)) }}</td>
                                         <td>{{ $project->customer['name'] }}</td>
                                         <td class="d-flex">
                                             <a href="{{ route('projects.show', $project->id) }}" class="fa fa-search btn btn-info" role="button" title="Show"></a>

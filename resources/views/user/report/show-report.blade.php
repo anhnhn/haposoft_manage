@@ -24,13 +24,8 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        @if (session('status'))
-                            <div class="alert alert-success" role="alert">
-                                {{ session('status') }}
-                            </div>
-                        @endif
                         @if (Session::has('message'))
-                                <h3 class="text-danger">{{ Session::get('message') }}</h3>
+                                <h3 class="text-danger alert-success">{{ Session::get('message') }}</h3>
                         @endif
                         <table class="table table-bordered users-table">
                             <thead>
@@ -45,7 +40,7 @@
                                 @foreach($reports as $report)
                                 <tr>
                                     <td>{{ $report->name }}</td>
-                                    <td>{{ $report->created_at }}</td>
+                                    <td>{{ date('d-m-Y', strtotime($report->created_at)) }}</td>
                                     <td>{{ $report->content }}</td>
                                     <td class="d-flex">
                                         <a href="{{ route('user-reports.show', $report->id)}}" class="btn btn-info mr-2" role="button" title="Show">

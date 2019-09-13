@@ -19,13 +19,8 @@
                         <p class="col-4">Show Projects</p>
                     </div>
                     <div class="card-body">
-                        @if (session('status'))
-                            <div class="alert alert-success" role="alert">
-                                {{ session('status') }}
-                            </div>
-                        @endif
                         @if (Session::has('message'))
-                            <h3 class="text-danger">{{ Session::get('message') }}</h3>
+                            <h3 class="text-danger alert-success">{{ Session::get('message') }}</h3>
                         @endif
                         <table class="table table-bordered users-table">
                             <thead>
@@ -40,8 +35,8 @@
                             @foreach($projects as $project)
                                 <tr>
                                     <td>{{ $project->name }}</td>
-                                    <td>{{ $project->start_date }}</td>
-                                    <td>{{ $project->end_date }}</td>
+                                    <td>{{ date('d-m-Y', strtotime($project->start_date)) }}</td>
+                                    <td>{{ date('d-m-Y', strtotime($project->end_date)) }}</td>
                                     <td class="d-flex">
                                         <a href="{{ route('customer-projects.show', $project->id)}}" class="btn btn-info mr-2" role="button" title="Show">
                                             <i class="material-icons">youtube_searched_for</i>

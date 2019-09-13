@@ -34,8 +34,8 @@
                             <tbody>
                                 <tr>
                                     <td>{{ $project->name }}</td>
-                                    <td>{{ $project->start_date }}</td>
-                                    <td>{{ $project->end_date }} </td>
+                                    <td>{{ date('d-m-Y', strtotime($project->start_date)) }}</td>
+                                    <td>{{ date('d-m-Y', strtotime($project->end_date)) }} </td>
                                     <td>{{ $project->customer['name'] }} </td>
                                 </tr>
                             </tbody>

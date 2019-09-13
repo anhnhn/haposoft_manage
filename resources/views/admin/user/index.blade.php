@@ -19,7 +19,7 @@
                     </div>
                     <div class="box-body">
                         @if (Session::has('message'))
-                        <h3 class="text-danger">{{ Session::get('message') }}</h3>
+                        <h3 class="text-danger alert-success">{{ Session::get('message') }}</h3>
                         @endif
                         <table id="example2" class="table table-bordered table-hover users-table">
                             <thead>
@@ -37,7 +37,7 @@
                             <tr>
                                 <td>{{ $user->name }}</td>
                                 <td>{{ $user->email }}</td>
-                                <td>{{ $user->birth_day }}</td>
+                                <td>{{ date('d-m-Y', strtotime($user->birth_day)) }}</td>
                                 <td>{{ $user->address }}</td>
                                 <td>{{ $user->phone }}</td>
                                 <td class="d-flex">

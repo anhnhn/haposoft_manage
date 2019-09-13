@@ -26,7 +26,7 @@
                                 <div class="form-group d-flex">
                                     <label for="birth_day" class="col-xs-3 col-form-label">Birth Day</label>
                                     <div class="col-xs-10">
-                                        <input type="text" readonly class="form-control" value='{{ $user->birth_day }}'>
+                                        <input type="text" readonly class="form-control" value='{{ date('d-m-Y', strtotime($user->birth_day)) }}'>
                                     </div>
                                 </div>
                                 <div class="form-group d-flex">

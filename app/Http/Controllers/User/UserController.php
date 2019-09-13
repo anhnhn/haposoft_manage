@@ -39,11 +39,19 @@ class UserController extends Controller
 
     public function edit($id)
     {
-        $user = User::findOrFail($id);
-        $data = [
-            'user' => $user
-        ];
-        return view('user.update', $data);
+        $userUpdate = User::findOrFail($id);
+        $url = $userUpdate->getUrlAttribute($userUpdate->avatar);
+        $user = Auth::user();
+        if ($user->can('update', $userUpdate)) {
+            $data = [
+                'user' => $user,
+                'url' => $url
+            ];
+            return view('user.update', $data);
+        }
+        else {
+            return abort('401');
+        }
     }
 
     public function update(UserRequest $request, $id)
@@ -65,23 +73,37 @@ class UserController extends Controller
 
     public function showReport($id)
     {
+        $userLogin = Auth::user();
         $user = User::findOrFail($id);
         $reports = $user->reports;
-        $data = [
-            'user' => $user,
-            'reports' => $reports
-        ];
-        return view('user.report.show-report', $data);
+        if ($userLogin->can('showReport', $reports->first()))
+        {
+            $data = [
+                'user' => $user,
+                'reports' => $reports
+            ];
+            return view('user.report.show-report', $data);
+        }
+        else {
+            return abort('401');
+        }
     }
 
     public function createReport($id)
     {
         $user = User::findOrFail($id);
-        $tasks = $user->tasks;
-        $data = [
-            'user' => $user,
-            'tasks' => $tasks,
-        ];
-        return view('user.report.create', $data);
+        $userLogin = Auth::user();
+        if($userLogin->can('createReport', $user)) {
+            $tasks = $user->tasks;
+            $data = [
+                'user' => $user,
+                'tasks' => $tasks,
+            ];
+            return view('user.report.create', $data);
+        }
+        else
+        {
+            return abort('401');
+        }
     }
 }

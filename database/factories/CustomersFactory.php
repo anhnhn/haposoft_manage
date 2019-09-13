@@ -9,7 +9,7 @@ $factory->define(Customer::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,
-        'password' => bcrypt('password'),
+        'password' => bcrypt('123456'),
         'remember_token' => Str::random(10),
         'address' => $faker->address,
         'created_at' => now(),

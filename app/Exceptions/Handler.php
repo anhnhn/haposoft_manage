@@ -5,6 +5,7 @@ namespace App\Exceptions;
 use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Foundation\Validation\ValidationException;
 
 class Handler extends ExceptionHandler
 {
@@ -14,7 +15,6 @@ class Handler extends ExceptionHandler
      * @var array
      */
     protected $dontReport = [
-        //
     ];
 
     /**

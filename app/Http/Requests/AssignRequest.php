@@ -2,9 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Project;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserRequest extends FormRequest
+class AssignRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -31,26 +32,24 @@ class UserRequest extends FormRequest
             }
             case 'POST':
             {
+                $projectId = $this->input('project_id');
+                $project = Project::findOrFail($projectId);
+                $startDateProject = $project->start_date;
+                $endDateProject = $project->end_date;
                 return [
-                    'email' => 'required|email|max:255|unique:users,email',
-                    'password' => 'required|min:6',
-                    'name' => 'required|max:50',
-                    'address' => 'required',
-                    'phone' => 'required|numeric|digits_between:10,15',
-                    'department_id' => 'required|numeric',
-                    'avatar' => 'image',
-                    'birth_day' => 'bail|required|date'
+                    'project_id' => 'required|numeric',
+                    'department_id' => 'nullable|numeric',
+                    'user_id' => 'required|numeric',
+                    'start_date' => 'bail|required|date|after_or_equal:' . $startDateProject,
+                    'end_date' => 'bail|required|date|after_or_equal:start_date|before_or_equal:' . $endDateProject,
                 ];
             }
             case 'PUT':
             {
                 return [
-                    'email' => 'email|max:255|unique:users,email,' . $this->route('user'),
-                    'name' => 'required|max:50',
-                    'phone' => 'required|numeric|digits_between:10,15',
-                    'department_id' => 'numeric',
-                    'avatar' => 'image',
-                    'birth_day' => 'bail|required|date'
+                    'project_id' => 'numeric',
+                    'start_date' => 'bail|required|date',
+                    'end_date' => 'bail|required|date|after:start_date'
                 ];
             }
             case 'PATCH':
