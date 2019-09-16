@@ -1,9 +1,9 @@
 $(document).ready(function () {
-    var baseUrl = window.location.origin;
+    let baseUrl = window.location.origin;
 
     $('#taskProjectId').on('change', function () {
         $('#userId').empty();
-        var projectId = $('#taskProjectId').val();
+        let projectId = $('#taskProjectId').val();
         $.ajax({
             headers:
                 {
@@ -12,10 +12,12 @@ $(document).ready(function () {
             type: "GET",
             url: baseUrl + '/haposoft_manage/public/admin/ajax/getUserByProjectId/' + projectId,
             success: function (data) {
-                var htmldefault = '<option value="" selected>No User</option>';
-                var htmlSelect = '';
-                var users = data.project.users;
-                $.each(users, function (i, user) {
+                let htmldefault = '<option value="" selected>No User</option>';
+                let htmlSelect = '';
+                let users = data.project.users;
+                let usersDeduplicate = deduplicate(users);
+                console.log(usersDeduplicate);
+                $.each(usersDeduplicate, function (i, user) {
                     htmlSelect += `<option value="${user.id}">${user.name}</option>`;
                 });
                 $('#userId').append(htmldefault);
@@ -24,5 +26,25 @@ $(document).ready(function () {
             error: function (e) {
             }
         });
+    });
+
+    function deduplicate(users) {
+        let isExist = (users, user) => {
+            for (let i = 0; i < users.length; i++) {
+                if (users[i].user_id === user.user_id) return true;
+            }
+            return false;
+        };
+        let usersDeduplicate = [];
+        users.forEach(element => {
+            if (!isExist(usersDeduplicate, element)) {
+                usersDeduplicate.push(element);
+            }
+        });
+        return usersDeduplicate;
+    }
+
+    $("select").each(function () {
+        $(this).val($(this).find('option[selected]').val());
     });
 });

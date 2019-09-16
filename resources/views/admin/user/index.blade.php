@@ -45,7 +45,7 @@
                                     <form  method="POST" action="{{ route('users.destroy', [$user->id]) }}">
                                         {{ csrf_field() }}
                                         {{ method_field('DELETE') }}
-                                        <button class="fa fa-remove btn-danger btn" role="button" title="Delete"></button>
+                                        <button type="button" class="fa fa-remove btn-danger btn btn-delete" title="Delete" data-name="{{ $user->name }}"></button>
                                     </form>
                                 </td>
                             </tr>

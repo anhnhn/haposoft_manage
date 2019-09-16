@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Config;
 
 class UserController extends Controller
 {
@@ -16,8 +17,9 @@ class UserController extends Controller
     public function index()
     {
         $user = Auth::user();
+        $projects = $user->projects()->paginate(config('variables.paginate'));
         $data = [
-            'user' => $user
+            'projects' => $projects,
         ];
         return view('user.home', $data);
     }
@@ -48,8 +50,7 @@ class UserController extends Controller
                 'url' => $url
             ];
             return view('user.update', $data);
-        }
-        else {
+        } else {
             return abort('401');
         }
     }
@@ -75,16 +76,14 @@ class UserController extends Controller
     {
         $userLogin = Auth::user();
         $user = User::findOrFail($id);
-        $reports = $user->reports;
-        if ($userLogin->can('showReport', $reports->first()))
-        {
+        $reports = $user->reports()->paginate(config('variables.paginate'));
+        if ($userLogin->can('showReport', $reports->first())) {
             $data = [
                 'user' => $user,
                 'reports' => $reports
             ];
             return view('user.report.show-report', $data);
-        }
-        else {
+        } else {
             return abort('401');
         }
     }
@@ -93,16 +92,14 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
         $userLogin = Auth::user();
-        if($userLogin->can('createReport', $user)) {
+        if ($userLogin->can('createReport', $user)) {
             $tasks = $user->tasks;
             $data = [
                 'user' => $user,
                 'tasks' => $tasks,
             ];
             return view('user.report.create', $data);
-        }
-        else
-        {
+        } else {
             return abort('401');
         }
     }

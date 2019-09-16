@@ -30,7 +30,7 @@ class ReportController extends Controller
     public function show($id)
     {
         $report = Report::findOrFail($id);
-        $tasks  = $report->tasks()->get();
+        $tasks = $report->tasks()->get();
         $data = [
             'report' => $report,
             'tasks' => $tasks
@@ -58,19 +58,12 @@ class ReportController extends Controller
 
     public function search(Request $request)
     {
-        if($request->report_name == null)
-        {
-            return redirect()->route('reports.index');
-        }
-        else
-        {
-            $report_name = $request->report_name;
-            $reports = Report::where('name', 'like', '%' . $report_name . '%')->orderByDesc('id')->paginate(config('variables.paginate'));
-            $data = [
-                'reports' => $reports,
-                'reportName' => $report_name
-            ];
-            return view('admin.report.index', $data);
-        }
+        $report_name = $request->report_name;
+        $reports = Report::where('name', 'like', '%' . $report_name . '%')->orderByDesc('id')->paginate(config('variables.paginate'));
+        $data = [
+            'reports' => $reports,
+            'reportName' => $report_name
+        ];
+        return view('admin.report.index', $data);
     }
 }

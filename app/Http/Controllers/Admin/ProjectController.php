@@ -72,19 +72,12 @@ class ProjectController extends Controller
 
     public function search(Request $request)
     {
-        if($request->project_name == null)
-        {
-            return redirect()->route('projects.index');
-        }
-        else
-        {
-            $project_name = $request->project_name;
-            $projects = Project::where('name', 'like', '%' . $project_name . '%')->orderByDesc('id')->paginate(config('variables.paginate'));
-            $data = [
-                'projects' => $projects,
-                'projectName' => $project_name
-            ];
-            return view('admin.project.index', $data);
-        }
+        $projectName = $request->project_name;
+        $projects = Project::where('name', 'like', '%' . $projectName . '%')->orderByDesc('id')->paginate(config('variables.paginate'));
+        $data = [
+            'projects' => $projects,
+            'projectName' => $projectName
+        ];
+        return view('admin.project.index', $data);
     }
 }

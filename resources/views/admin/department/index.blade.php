@@ -38,7 +38,7 @@
                                             <form  method="POST" action="{{ route('departments.destroy', [$department->id]) }}">
                                                 {{ csrf_field() }}
                                                 {{ method_field('DELETE') }}
-                                                <button class="fa fa-remove btn-danger btn" role="button" title="Delete"></button>
+                                                <button type="button" class="fa fa-remove btn-danger btn btn-delete" title="Delete" data-name="{{ $department->name }}"></button>
                                             </form>
                                         </td>
                                     </tr>

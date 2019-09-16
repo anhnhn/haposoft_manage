@@ -77,9 +77,14 @@ class UserController extends Controller
         if ($request->hasFile('avatar')) {
             Storage::disk('public')->delete('/' . $user->avatar);
             $input['avatar'] = $request->file('avatar')->store('images', ['disk' => 'public']);
+            $input['password'] = \Hash::make($request->get('password'));
+            $user->update($input);
         }
-        $input['password'] = \Hash::make($request->get('password'));
-        $user->update($input);
+        else
+        {
+            $input['password'] = \Hash::make($request->get('password'));
+            $user->update($input);
+        }
         return redirect()->route('users.index')->with('message', __('messages.update_message'));
     }
 
@@ -87,25 +92,24 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
         $user->projects()->detach();
+        $tasks = $user->tasks;
+        foreach ($tasks as $task)
+        {
+            $task->update([
+                'user_id' => null,
+            ]);
+        }
         $user->delete();
         return redirect()->route('users.index')->with('message', __('messages.delete_message'));
     }
 
     public function search(Request $request)
     {
-        if($request->user_name == null)
-        {
-            return redirect()->route('users.index');
-        }
-        else
-        {
-            $user_name = $request->user_name;
-            $users = User::where('name', 'like', '%' . $user_name . '%')->orderByDesc('id')->paginate(config('variables.paginate'));
-            $data = [
-                'users' => $users,
-                'userName' => $user_name
-            ];
-            return view('admin.user.index', $data);
-        }
+        $userName = $request->user_name;
+        $users = User::where('name', 'like', '%' . $userName . '%')->orderByDesc('id')->paginate(config('variables.paginate'));
+        $data = [
+            'users' => $users,
+        ];
+        return view('admin.user.index', $data);
     }
 }

@@ -8,8 +8,8 @@ use Illuminate\Support\Str;
 
 $factory->define(Admin::class, function (Faker $faker) {
     return [
-        'name' => $faker->name,
-        'email' => $faker->unique()->safeEmail,
+        'name' => 'admin111',
+        'email' => 'admin@gmail.com',
         'password' => bcrypt('123456'),
         'remember_token' => Str::random(10)
     ];

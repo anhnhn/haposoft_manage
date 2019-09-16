@@ -41,12 +41,14 @@ Route::namespace('User')->group(function () {
         Route::resource('user-tasks', 'TaskController');
         Route::get('/showreport/{userId}', 'UserController@showReport')->name('users.showReport');
         Route::get('/createreport/{userId}', 'UserController@createReport')->name('users.createReport');
+        Route::get('/project/search', 'ProjectController@search')->name('user-projects.search');
+        Route::get('/showreport/{userId}/search', 'ReportController@search')->name('user-reports.search');
+        Route::get('/home', 'UserController@index')->name('user.home');
     });
 });
 
 Route::prefix('user')->group(function () {
     Route::get('/logout', 'Auth\LoginController@userLogout')->name('users.logout');
-    Route::get('/home', 'UserController@index')->name('user.home');
 });
 
 

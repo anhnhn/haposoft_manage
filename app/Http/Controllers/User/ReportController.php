@@ -73,4 +73,26 @@ class ReportController extends Controller
     {
 
     }
+
+    public function search(Request $request, $userId)
+    {
+        $user = Auth::user();
+        if (isset($request->report_name)) {
+            $reports = Report::where('name', 'like', '%' . $request->report_name . '%')->paginate(config('variables.paginate'));
+        }
+        if ($request->date) {
+            $reports = Report::whereDate('created_at', '=', $request->date)->paginate(config('variables.paginate'));
+        }
+        if (isset($request->report_name) && $request->date) {
+            $reports = Report::where('name', 'like', '%' . $request->report_name . '%')->whereDate('created_at', '=', $request->date)->paginate(config('variables.paginate'));
+        }
+        if (!(isset($request->report_name)) && !($request->date)){
+            $reports = $user->reports()->paginate(config('variables.paginate'));
+        }
+        $data = [
+            'reports' => $reports,
+            'user' => $user,
+        ];
+        return view('user.report.show-report', $data);
+    }
 }

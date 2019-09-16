@@ -61,9 +61,7 @@ class ProjectUserController extends Controller
                 'projects' => $projects,
                 'message' => 'Assign successfully'
             ];
-        }
-        else
-        {
+        } else {
             $data = [
                 'message' => 'Time overlaps'
             ];
@@ -113,7 +111,7 @@ class ProjectUserController extends Controller
         $data = [];
         if (is_numeric($projectId)) {
             $project = Project::with(['users' => function ($query) {
-                $query->orderBy('name');
+                $query->orderBy('name')->orderBy('start_date', 'desc');
             }])->findOrFail($projectId);
             $data = [
                 'project' => $project,
@@ -139,7 +137,7 @@ class ProjectUserController extends Controller
     public function destroyUser($userId, $projectId, $startDate, $endDate)
     {
         $project = Project::findOrFail($projectId);
-        $project->users()->wherePivot('user_id', $userId)->wherePivot('start_date', $startDate)->wherePivot('end_date', $endDate)->detach();
+        $project->users()->wherePivot('user_id', $userId)->wherePivot('start_date', $startDate)->wherePivot('end_date', $endDate)->detach($userId);
         $data = [
             'message' => 'have user',
             'startDate' => $startDate,
@@ -162,8 +160,7 @@ class ProjectUserController extends Controller
         foreach ($data1 as $user) {
             if ($startDate > $user->start_date && $endDate < $user->end_date) {
                 $data2[] = $user;
-            }
-            elseif($startDate < $user->start_date && $endDate > $user->end_date) {
+            } elseif ($startDate < $user->start_date && $endDate > $user->end_date) {
                 $data2[] = $user;
             }
         };
