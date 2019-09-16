@@ -18,7 +18,7 @@ class UpdateTest extends TestCase
         parent::loginAdmin();
         $department = parent::createDepartment();
         $user = parent::createUser();
-        $data =  [
+        $data = [
             'name' => str_repeat('a', 49),
             'email' => 'namanh@gmail.com',
             'password' => '123456',
@@ -43,14 +43,14 @@ class UpdateTest extends TestCase
         $response->assertRedirect(route('users.index'));
     }
 
-    public function testUpdateFail() {
+    public function testUpdateFail()
+    {
         parent::loginAdmin();
         $department = parent::createDepartment();
         $user = parent::createUser();
         $data = [
             'name' => str_repeat('a', 51),
             'email' => 'namanh01@gmail.com',
-            'password' => '12345',
             'birth_day' => Carbon::tomorrow(),
             'address' => '',
             'phone' => str_repeat('1', 9),
@@ -60,10 +60,9 @@ class UpdateTest extends TestCase
             'department_id' => '',
         ];
         $dateNow = Carbon::today();
-        $response = $this->call('post', route('users.store'), $data);
+        $response = $this->call('put', route('users.update', $user->id), $data);
         $errors = [
             'name' => 'The name may not be greater than 50 characters.',
-            'password' => 'The password must be at least 6 characters.',
             'address' => 'The address field is required.',
             'phone' => 'The phone must be between 10 and 15 digits.',
             'avatar' => 'The avatar may not be greater than 5120 kilobytes.',

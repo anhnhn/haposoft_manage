@@ -24,12 +24,12 @@ class EditTest extends TestCase
         $response->assertViewHas('url');
     }
 
-    public function testShowFail()
+    public function testEditFail()
     {
         parent::loginAdmin();
         $departments = factory(Department::class, 5)->create();
         $user = parent::createUser();
-        $response = $this->call('get', route('users.show', $user->id+1));
+        $response = $this->call('get', route('users.edit', $user->id+1));
         $this->assertEquals(404, $response->status());
     }
 }

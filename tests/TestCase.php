@@ -3,6 +3,7 @@
 namespace Tests;
 
 use App\Models\Admin;
+use App\Models\Customer;
 use App\Models\Department;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -25,5 +26,10 @@ abstract class TestCase extends BaseTestCase
     public function createUser() {
         $user = factory(User::class)->create();
         return $user;
+    }
+
+    public function createCustomer() {
+        $customer = factory(Customer::class)->create();
+        return $customer;
     }
 }
