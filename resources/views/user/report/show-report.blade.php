@@ -16,16 +16,25 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header d-flex">
-                        <p class="col-4">Show Reports</p>
-                        <div class="col-8 text-right">
-                            <a href="{{ route('users.createReport', $user->id) }}" class="btn btn-info mr-2" role="button" title="Show">
+                        <span class="col-2">Show Reports</span>
+                        <form class="form-inline col-8 d-flex justify-content-center" method="GET"
+                              action="{{ route('user-reports.search', $user->id) }}" id="formSearchUserProject">
+                            <input class="form-control mr-2" type="text" placeholder="Name Report" name="report_name"
+                                   value="{{ request('report_name') }}">
+                            <input class="form-control" type="date" name="date" value="{{ request('date') }}">
+                            <button class="ml-2 btn-primary btn" title="name" id="searchUserReport"><i
+                                        class="material-icons">youtube_searched_for</i></button>
+                        </form>
+                        <div class="col-2 text-right">
+                            <a href="{{ route('users.createReport', $user->id) }}" class="btn btn-info mr-2"
+                               role="button" title="Show">
                                 Create
                             </a>
                         </div>
                     </div>
                     <div class="card-body">
                         @if (Session::has('message'))
-                                <h3 class="text-danger alert-success">{{ Session::get('message') }}</h3>
+                            <h3 class="text-danger alert-success">{{ Session::get('message') }}</h3>
                         @endif
                         <table class="table table-bordered users-table">
                             <thead>
@@ -37,28 +46,39 @@
                             </tr>
                             </thead>
                             <tbody>
-                                @foreach($reports as $report)
+                            @foreach($reports as $report)
                                 <tr>
                                     <td>{{ $report->name }}</td>
                                     <td>{{ date('d-m-Y', strtotime($report->created_at)) }}</td>
                                     <td>{{ $report->content }}</td>
                                     <td class="d-flex">
-                                        <a href="{{ route('user-reports.show', $report->id)}}" class="btn btn-info mr-2" role="button" title="Show">
+                                        <a href="{{ route('user-reports.show', $report->id)}}" class="btn btn-info mr-2"
+                                           role="button" title="Show">
                                             <i class="material-icons">youtube_searched_for</i>
                                         </a>
-                                        <a href="{{ route('user-reports.edit', $report->id) }}" class="btn-warning btn mr-2" role="button" title="Edit">
-                                            <i class="material-icons">
-                                                card_travel
-                                            </i>
-                                        </a>
+                                        @if($user->cant('updateReport', $report))
+                                            <a href="{{ route('user-reports.edit', $report->id) }}"
+                                               class="btn-warning btn mr-2 disabled" role="button" title="Edit">
+                                                <i class="material-icons">
+                                                    card_travel
+                                                </i>
+                                            </a>
+                                        @else
+                                            <a href="{{ route('user-reports.edit', $report->id) }}"
+                                               class="btn-warning btn mr-2" role="button" title="Edit">
+                                                <i class="material-icons">
+                                                    card_travel
+                                                </i>
+                                            </a>
+                                        @endif
                                     </td>
                                 </tr>
-                                @endforeach
+                            @endforeach
                             </tbody>
                         </table>
-                        {{--                            <div class="col-12 text-center">--}}
-                        {{--                                {{ Auth::user()->projects->links() }}--}}
-                        {{--                            </div>--}}
+                        <div class="col-12 d-flex justify-content-center">
+                            {{ $reports->appends($_GET)->links() }}
+                        </div>
                     </div>
                 </div>
             </div>

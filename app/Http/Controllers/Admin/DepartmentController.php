@@ -54,12 +54,22 @@ class DepartmentController extends Controller
     public function destroy($id)
     {
         $department = Department::findOrFail($id);
-        foreach ($department->users()->get() as $user)
-        {
+        foreach ($department->users()->get() as $user) {
             $user['department_id'] = null;
             $user->update();
         }
         $department->delete();
         return redirect()->route('departments.index')->with('message', __('messages.delete_message'));
+    }
+
+    public function search(Request $request)
+    {
+        $department_name = $request->department_name;
+        $departments = Department::where('name', 'like', '%' . $department_name . '%')->orderByDesc('id')->paginate(config('variables.paginate'));
+        $data = [
+            'departments' => $departments,
+            'departmentName' => $department_name
+        ];
+        return view('admin.department.index', $data);
     }
 }

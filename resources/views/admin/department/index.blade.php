@@ -8,10 +8,9 @@
                     <div class="box">
                         <div class="box-header d-flex ">
                             <h3 class="box-title">List Departments</h3>
-                            <form class="form-inline col-xs-7 text-center">
-                                <i class="fa fa-search" aria-hidden="true"></i>
-                                <input class="form-control" type="text" placeholder="Search"
-                                       aria-label="Search">
+                            <form class="form-inline col-xs-7 text-center" method="GET" action="{{ route('departments.search') }}" id="formSearchDepartment">
+                                <input class="form-control" type="text" placeholder="Search" name="department_name" value="{{ request('department_name') }}">
+                                <button class="fa fa-search btn-primary btn" role="button" title="search" id="searchDepartment"></button>
                             </form>
                             <div class="col-xs-4 text-right">
                                 <a href="{{ route('departments.create') }}" class="btn btn-info" role="button">Create</a>
@@ -39,7 +38,7 @@
                                             <form  method="POST" action="{{ route('departments.destroy', [$department->id]) }}">
                                                 {{ csrf_field() }}
                                                 {{ method_field('DELETE') }}
-                                                <button class="fa fa-remove btn-danger btn" role="button" title="Delete"></button>
+                                                <button type="button" class="fa fa-remove btn-danger btn btn-delete" title="Delete" data-name="{{ $department->name }}"></button>
                                             </form>
                                         </td>
                                     </tr>
@@ -53,7 +52,7 @@
                                 </tfoot>
                             </table>
                             <div class="col-12 text-center">
-                                {{ $departments->links() }}
+                                {{ $departments->appends($_GET)->links() }}
                             </div>
                         </div>
                     </div>

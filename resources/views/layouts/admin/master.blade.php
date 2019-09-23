@@ -135,7 +135,6 @@
 <script src="{{ asset("js/demo.js") }}"></script>
 <script src="{{ asset("js/dataTables.bootstrap.min.js") }}"></script>
 <script src="{{ asset("js/jquery.dataTables.min.js") }}"></script>
-<script src="{{ asset("admin/js/admin-department.js") }}"></script>
 <script src="{{ asset("admin/js/admin-task.js") }}"></script>
 <script src="{{ asset("admin/js/admin-project-user.js") }}"></script>
 <script src="{{ asset("admin/js/file-input.js") }}"></script>

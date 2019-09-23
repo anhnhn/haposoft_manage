@@ -16,6 +16,12 @@ Route::namespace('Admin')->group(function () {
         Route::resource('customers', 'CustomerController');
         Route::resource('reports', 'ReportController');
         Route::get('/home', 'AdminController@index')->name('admins.dashboard');
+        Route::get('/user/search', 'UserController@search')->name('users.search');
+        Route::get('/department/search', 'DepartmentController@search')->name('departments.search');
+        Route::get('/customer/search', 'CustomerController@search')->name('customers.search');
+        Route::get('/task/search', 'TaskController@search')->name('tasks.search');
+        Route::get('/report/search', 'ReportController@search')->name('reports.search');
+        Route::get('/project/search', 'ProjectController@search')->name('projects.search');
     });
     Route::prefix('admin/ajax')->group(function () {
         Route::get('/getProjectById/{projectId}', 'ProjectUserController@getProjectById');
@@ -35,12 +41,14 @@ Route::namespace('User')->group(function () {
         Route::resource('user-tasks', 'TaskController');
         Route::get('/showreport/{userId}', 'UserController@showReport')->name('users.showReport');
         Route::get('/createreport/{userId}', 'UserController@createReport')->name('users.createReport');
+        Route::get('/project/search', 'ProjectController@search')->name('user-projects.search');
+        Route::get('/showreport/{userId}/search', 'ReportController@search')->name('user-reports.search');
+        Route::get('/home', 'UserController@index')->name('user.home');
     });
 });
 
 Route::prefix('user')->group(function () {
     Route::get('/logout', 'Auth\LoginController@userLogout')->name('users.logout');
-    Route::get('/home', 'UserController@index')->name('user.home');
 });
 
 

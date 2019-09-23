@@ -11,7 +11,7 @@ $factory->define(Task::class, function (Faker $faker) {
         'content' => $faker->text,
         'hours' => $faker->numberBetween(1,30),
         'user_id' => App\Models\User::all()->random()->id,
-        'link'=> $faker->text,
+        'link'=> $faker->url,
         'project_id' => App\Models\Project::all()->random()->id
     ];
 });

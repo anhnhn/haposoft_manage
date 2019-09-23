@@ -5,20 +5,21 @@ namespace App\Policies;
 use App\Models\Report;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use App\Models\Project;
 
 class UserPolicy
 {
     use HandlesAuthorization;
-    
+
     /**
      * Determine whether the user can view any models.
      *
-     * @param  \App\Models\User  $user
+     * @param \App\Models\User $user
      * @return mixed
      */
     public function viewAny(User $user)
     {
-        //
+
     }
 
     public function showReport(User $user, Report $report)
@@ -26,9 +27,13 @@ class UserPolicy
         return $user->id == $report->user_id;
     }
 
-    public function view(User $user, User $model)
+    public function viewProjectUser(User $user, Project $project)
     {
-        //
+        $data = [];
+        foreach ($project->users as $item) {
+            array_push($data, $item->id);
+        }
+        return in_array($user->id, $data);
     }
 
     public function create(User $user)
@@ -65,7 +70,6 @@ class UserPolicy
     {
         //
     }
-
 
 
 }

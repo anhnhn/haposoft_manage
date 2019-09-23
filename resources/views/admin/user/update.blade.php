@@ -56,7 +56,6 @@
                                 <div class="form-group col-xs-6">
                                     <label for="department">Department</label>
                                     <select class="form-control col-xs-10 @error('department_id') is-invalid @enderror" name="department_id">
-                                        <option value="" disabled selected>Choose your option</option>
                                         @foreach($departments as $department)
                                             @if($user->department_id == $department->id)
                                                 <option value="{{ $department->id }}"  selected>{{ $department->name }}</option>

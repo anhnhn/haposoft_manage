@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Carbon\Carbon;
 
 class UserRequest extends FormRequest
 {
@@ -31,6 +32,7 @@ class UserRequest extends FormRequest
             }
             case 'POST':
             {
+                $dateNow = Carbon::today();
                 return [
                     'email' => 'required|email|max:255|unique:users,email',
                     'password' => 'required|min:6',
@@ -38,8 +40,8 @@ class UserRequest extends FormRequest
                     'address' => 'required',
                     'phone' => 'required|numeric|digits_between:10,15',
                     'department_id' => 'required|numeric',
-                    'avatar' => 'image',
-                    'birth_day' => 'bail|required|date'
+                    'avatar' => 'image|max:5120',
+                    'birth_day' => 'bail|required|date|before:' . $dateNow,
                 ];
             }
             case 'PUT':

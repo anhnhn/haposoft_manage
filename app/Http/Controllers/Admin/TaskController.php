@@ -14,7 +14,7 @@ class TaskController extends Controller
 
     public function index()
     {
-        $tasks = Task::orderByDesc('project_id', 'desc')->paginate(config('variables.paginate'));
+        $tasks = Task::orderByDesc('project_id')->paginate(config('variables.paginate'));
         $data = [
             'tasks' => $tasks
         ];
@@ -25,7 +25,7 @@ class TaskController extends Controller
     {
         $projects = Project::with(['users' => function ($query) {
             $query->select('user_id', 'name')->get();
-        }])->orderByDesc('id')->paginate(config('variables.paginate'));
+        }])->orderByDesc('name')->get();
         $data = [
             'projects' => $projects
         ];
@@ -88,5 +88,16 @@ class TaskController extends Controller
             'project' => $project
         ];
         return response()->json($data);
+    }
+
+    public function search(Request $request)
+    {
+        $task_name = $request->task_name;
+        $tasks = Task::where('name', 'like', '%' . $task_name . '%')->orderByDesc('id')->paginate(config('variables.paginate'));
+        $data = [
+            'tasks' => $tasks,
+            'taskName' => $task_name
+        ];
+        return view('admin.task.index', $data);
     }
 }

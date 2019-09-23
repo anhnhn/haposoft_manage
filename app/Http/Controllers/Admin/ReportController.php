@@ -30,7 +30,7 @@ class ReportController extends Controller
     public function show($id)
     {
         $report = Report::findOrFail($id);
-        $tasks  = $report->tasks()->get();
+        $tasks = $report->tasks()->get();
         $data = [
             'report' => $report,
             'tasks' => $tasks
@@ -54,5 +54,16 @@ class ReportController extends Controller
         $report->tasks()->detach();
         $report->delete();
         return redirect()->route('reports.index')->with('message', __('messages.delete_message'));
+    }
+
+    public function search(Request $request)
+    {
+        $report_name = $request->report_name;
+        $reports = Report::where('name', 'like', '%' . $report_name . '%')->orderByDesc('id')->paginate(config('variables.paginate'));
+        $data = [
+            'reports' => $reports,
+            'reportName' => $report_name
+        ];
+        return view('admin.report.index', $data);
     }
 }

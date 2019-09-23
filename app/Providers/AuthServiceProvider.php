@@ -34,5 +34,6 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('updateReport', 'App\Policies\UserPolicy@updateReport');
         Gate::define('createReport', 'App\Policies\UserPolicy@createReport');
         Gate::define('viewProject', 'App\Policies\CustomerPolicy@viewProject');
+        Gate::define('viewProjectUser', 'App\Policies\UserPolicy@viewProjectUser');
     }
 }

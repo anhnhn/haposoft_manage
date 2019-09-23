@@ -2,8 +2,10 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 use App\Models\User;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Str;
 use Faker\Generator as Faker;
+use Carbon\Carbon;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,6 +29,8 @@ $factory->define(User::class, function (Faker $faker) {
         'address' => $faker->address,
         'created_at' => now(),
         'phone' => $faker->phoneNumber,
+        'avatar' => UploadedFile::fake()
+        ->image('default.png', 400, 400)->size(500),
         'department_id' => App\Models\Department::all()->random()->id
     ];
 });
