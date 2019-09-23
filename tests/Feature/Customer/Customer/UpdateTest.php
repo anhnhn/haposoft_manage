@@ -1,9 +1,7 @@
 <?php
 
-namespace Tests\Feature\Admin\Customer;
+namespace Tests\Feature\Customer\Customer;
 
-use Carbon\Carbon;
-use Illuminate\Http\UploadedFile;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -14,42 +12,37 @@ class UpdateTest extends TestCase
 
     public function testUpdateSuccessFully()
     {
-        parent::loginAdmin();
-        $customer = parent::createCustomer();
+        $customer = parent::loginCustomer();
         $data = [
             'name' => str_repeat('a', 49),
-            'email' => $customer->email,
-            'password' => '123456',
             'address' => 'Ha Noi',
             'phone' => str_repeat('1', 12),
-            'customer_id' => $customer->id,
-            'role_name' => 'customer',
+            'email' => $customer->email,
+            'customer_id' => $customer->id
         ];
-        $response = $this->call('put', route('customers.update', $customer->id), $data);
+        $response = $this->call('put', route('customer-customers.update', $customer->id), $data);
         $this->assertDatabaseHas('customers', [
             'name' => str_repeat('a', 49),
-            'email' => $customer->email,
             'address' => 'Ha Noi',
             'phone' => str_repeat('1', 12),
-            'role_name' => 'customer',
+            'email' => $customer->email,
         ]);
-        $response->assertRedirect(route('customers.index'));
+        $response->assertRedirect(route('customer-projects.index'));
     }
 
     public function testUpdateFail()
     {
-        parent::loginAdmin();
-        $customer = parent::createCustomer();
+        $customer = parent::loginCustomer();
         $data = [
             'name' => str_repeat('a', 51),
-            'email' => '',
             'address' => '',
             'phone' => str_repeat('1', 9),
+            'email' => $customer->email,
+            'id' => $customer->id
         ];
-        $response = $this->call('put', route('customers.update', $customer->id), $data);
+        $response = $this->call('put', route('customer-customers.update', $customer->id), $data);
         $errors = [
             'name' => 'The name may not be greater than 50 characters.',
-            'email' => 'The email field is required.',
             'address' => 'The address field is required.',
             'phone' => 'The phone must be between 10 and 15 digits.',
         ];

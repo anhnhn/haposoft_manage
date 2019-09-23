@@ -8,50 +8,51 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class UpdateTest extends TestCase
+class StoreTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testUpdateSuccessFully()
+    public function testStoreSuccessFully()
     {
         parent::loginAdmin();
-        $customer = parent::createCustomer();
-        $data = [
+        $response = $this->call('post', route('customers.store'), [
             'name' => str_repeat('a', 49),
-            'email' => $customer->email,
+            'email' => 'namanh@gmail.com',
             'password' => '123456',
             'address' => 'Ha Noi',
-            'phone' => str_repeat('1', 12),
-            'customer_id' => $customer->id,
+            'phone' => str_repeat('1', 11),
             'role_name' => 'customer',
-        ];
-        $response = $this->call('put', route('customers.update', $customer->id), $data);
+        ]);
         $this->assertDatabaseHas('customers', [
             'name' => str_repeat('a', 49),
-            'email' => $customer->email,
+            'email' => 'namanh@gmail.com',
             'address' => 'Ha Noi',
-            'phone' => str_repeat('1', 12),
+            'phone' => str_repeat('1', 11),
             'role_name' => 'customer',
         ]);
         $response->assertRedirect(route('customers.index'));
     }
 
-    public function testUpdateFail()
+    public function testStoreFail()
     {
         parent::loginAdmin();
         $customer = parent::createCustomer();
         $data = [
             'name' => str_repeat('a', 51),
-            'email' => '',
+            'email' => $customer->email,
+            'password' => '12345',
             'address' => '',
             'phone' => str_repeat('1', 9),
+            'role_name' => 'customer',
         ];
-        $response = $this->call('put', route('customers.update', $customer->id), $data);
+        $response = $this->call('post', route('customers.store'), $data);
         $errors = [
+            'email' => 'The email has already been taken.',
+            'password' => 'The password must be at least 6 characters.',
             'name' => 'The name may not be greater than 50 characters.',
-            'email' => 'The email field is required.',
             'address' => 'The address field is required.',
             'phone' => 'The phone must be between 10 and 15 digits.',
+
         ];
         $response->assertStatus(302)
             ->assertSessionHasErrors($errors);

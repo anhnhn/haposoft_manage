@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Admin\Department;
+namespace Tests\Feature\Admin\Project;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -13,8 +13,8 @@ class CreateTest extends TestCase
     public function testCreateSuccessFully()
     {
         parent::loginAdmin();
-        $response = $this->call('get', route('departments.create'));
+        $response = $this->call('get', route('customers.create'));
         $this->assertEquals(200, $response->status());
-        $response->assertViewIs('admin.department.create');
+        $response->assertViewIs('admin.customer.create');
     }
 }

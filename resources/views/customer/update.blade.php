@@ -48,6 +48,12 @@
                                     <div class="alert alert-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
+                                <div>
+                                    <input type="hidden" name="customer_id" value="{{ $customer->id }}">
+                                </div>
+                                <div>
+                                    <input type="hidden" name="email" value="{{ $customer->email }}">
+                                </div>
                             </div>
                             <div class="">
                                 <button type="submit" class="btn btn-primary">Update</button>

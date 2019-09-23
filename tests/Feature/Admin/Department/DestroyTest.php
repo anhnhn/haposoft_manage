@@ -1,8 +1,7 @@
 <?php
 
-namespace Tests\Feature\Admin\User;
+namespace Tests\Feature\Admin\Department;
 
-use Illuminate\Http\UploadedFile;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -14,20 +13,20 @@ class DestroyTest extends TestCase
     public function testDestroySuccessFully()
     {
         parent::loginAdmin();
-        $department = parent::createDepartment();
+        $department = parent::CreateDepartment();
         $user = parent::createUser();
         $data = [
+            'name' => $department->name,
+        ];
+        $dataUser = [
             'name' => $user->name,
             'email' => $user->email,
-            'birth_day' => $user->birth_day,
-            'address' => $user->address,
-            'phone' => $user->phone,
-            'role_name' => 'user',
-            'department_id' => $department->id,
+            'department_id' => null,
         ];
-        $response = $this->call('delete', route('users.destroy', $user->id));
-        $this->assertSoftDeleted('users', $data);
-        $response->assertRedirect(route('users.index'));
+        $response = $this->call('delete', route('departments.destroy', $department->id));
+        $this->assertSoftDeleted('departments', $data);
+        $this->assertDatabaseHas('users', $dataUser);
+        $response->assertRedirect(route('departments.index'));
     }
 
     public function testDestroyfail()
@@ -35,7 +34,7 @@ class DestroyTest extends TestCase
         parent::loginAdmin();
         $department = parent::createDepartment();
         $user = parent::createUser();
-        $response = $this->call('delete', route('users.destroy', $user->id+1));
+        $response = $this->call('delete', route('departments.destroy', $department->id+1));
         $response->assertStatus(404);
     }
 }

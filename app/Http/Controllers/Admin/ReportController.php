@@ -10,7 +10,7 @@ class ReportController extends Controller
 {
     public function index()
     {
-        $reports = Report::orderBy('id', 'desc')->paginate(Config('variables.paginate'));
+        $reports = Report::orderBy('user_id', 'desc')->paginate(Config('variables.paginate'));
         $data = [
             'reports' => $reports,
         ];

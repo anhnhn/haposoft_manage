@@ -46,13 +46,15 @@ class UserRequest extends FormRequest
             }
             case 'PUT':
             {
+                $dateNow = Carbon::today();
                 return [
                     'email' => 'email|max:255|unique:users,email,' . $this->route('user'),
                     'name' => 'required|max:50',
                     'phone' => 'required|numeric|digits_between:10,15',
-                    'department_id' => 'numeric',
-                    'avatar' => 'image',
-                    'birth_day' => 'bail|required|date'
+                    'department_id' => 'required|numeric',
+                    'avatar' => 'image|max:5120',
+                    'address' => 'required',
+                    'birth_day' => 'bail|required|date|before:' . $dateNow,
                 ];
             }
             case 'PATCH':

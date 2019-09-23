@@ -45,7 +45,6 @@ class ProjectController extends Controller
         } else {
             return abort('401');
         }
-
     }
 
     public function edit($id)

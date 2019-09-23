@@ -6,34 +6,32 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class UpdateTest extends TestCase
+class StoreTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testUpdateSuccessFully()
+    public function testStoreSuccessFully()
     {
         parent::loginAdmin();
-        $department = parent::createDepartment();
-        $data = [
-            'name' => str_repeat('a', 49),
-        ];
-        $response = $this->call('put', route('departments.update', $department->id), $data);
+        $response = $this->call('post', route('departments.store'), [
+            'name' => str_repeat('a', 50),
+        ]);
         $this->assertDatabaseHas('departments', [
-            'name' => str_repeat('a', 49),
+            'name' => str_repeat('a', 50),
         ]);
         $response->assertRedirect(route('departments.index'));
     }
 
-    public function testUpdateFail()
+    public function testStoreFail()
     {
         parent::loginAdmin();
         $department = parent::createDepartment();
         $data = [
-            'name' => str_repeat('a', 51),
+            'name' => $department->name,
         ];
-        $response = $this->call('put', route('departments.update', $department->id), $data);
+        $response = $this->call('post', route('departments.store'), $data);
         $errors = [
-            'name' => 'The name may not be greater than 50 characters.',
+            'name' => 'The name has already been taken.',
         ];
         $response->assertStatus(302)
             ->assertSessionHasErrors($errors);
