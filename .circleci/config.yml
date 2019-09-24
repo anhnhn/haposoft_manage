@@ -7,8 +7,8 @@ jobs:
   build:
     docker:
       # Specify the version you desire here
-      - image: circleci/php:7.1-node-browsers
-      - image: circleci/php:7.1-fpm-browsers-legacy
+      - image: circleci/php:7.2-node-browsers
+      - image: circleci/php:7.2-fpm-browsers-legacy
 
 
       # Specify service dependencies here if necessary
@@ -19,9 +19,9 @@ jobs:
       - image: circleci/mysql:5.7-ram
         environment:
           MYSQL_ROOT_PASSWORD:
-          MYSQL_DATABASE: haposoft_manage
+          MYSQL_DATABASE: haposoft_manage_test
           MYSQL_USER: root
-          MYSQL_PASSWORD: 
+          MYSQL_PASSWORD:
       #
       # - image: redis:2.8.19
 
@@ -50,20 +50,18 @@ jobs:
           keys:
             - node-v1-{{ checksum "package.json" }}
             - node-v1-
-      - run: yarn install
+      - run: npm install
       - save_cache:
           key: node-v1-{{ checksum "package.json" }}
           paths:
             - node_modules
-      - run: yarn run dev
+      - run: npm run dev
       # prepare the database
       - run: cp .env.testing .env
-      - run: php artisan migrate --env=testing --force
+      - run: php artisan migrate --env=testing --database=haposoft_manage_test --force
       - run:
           name: "Run tests"
-          command: phpdbg -qrr vendor/bin/phpunit -d memory_limit=512M --coverage-html build/coverage-report
-      - store_artifacts:
-          path:  build/coverage-report
+          command: phpdbg -qrr vendor/bin/phpunit
 
 workflows:
   version: 2

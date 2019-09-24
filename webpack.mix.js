@@ -30,19 +30,22 @@ const mix = require('laravel-mix');
 //     .scripts('node_modules/admin-lte/bower_components/datatables.net/js/jquery.dataTables.min.js', 'public/js/jquery.dataTables.min.js')
 //     .scripts('node_modules/admin-lte/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js', 'public/js/dataTables.bootstrap.min.js')
 //     .scripts('node_modules/admin-lte/plugins/jvectormap/jquery-jvectormap-world-mill-en.js', 'public/js/jquery-jvectormap-world-mill-en.js')
-    mix.styles([
-        'node_modules/admin-lte/bower_components/bootstrap/dist/css/bootstrap.min.css',
-        'node_modules/admin-lte/bower_components/font-awesome/css/font-awesome.min.css',
-        'node_modules/admin-lte/bower_components/Ionicons/css/ionicons.min.css',
-        'node_modules/admin-lte/dist/css/AdminLTE.min.css',
-        'node_modules/admin-lte/dist/css/skins/_all-skins.min.css',
-        'node_modules/admin-lte/bower_components/morris.js/morris.css',
-        'node_modules/admin-lte/bower_components/jvectormap/jquery-jvectormap.css',
-        'node_modules/admin-lte/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css',
-        'node_modules/admin-lte/bower_components/bootstrap-daterangepicker/daterangepicker.css',
-        'node_modules/admin-lte/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css',
-        'node_modules/admin-lte/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css'
-    ],  'public/css/admin-tle-css.css')
-   .js('resources/js/app.js', 'public/js')
+//     mix.styles([
+//         'node_modules/admin-lte/bower_components/bootstrap/dist/css/bootstrap.min.css',
+//         'node_modules/admin-lte/bower_components/font-awesome/css/font-awesome.min.css',
+//         'node_modules/admin-lte/bower_components/Ionicons/css/ionicons.min.css',
+//         'node_modules/admin-lte/dist/css/AdminLTE.min.css',
+//         'node_modules/admin-lte/dist/css/skins/_all-skins.min.css',
+//         'node_modules/admin-lte/bower_components/morris.js/morris.css',
+//         'node_modules/admin-lte/bower_components/jvectormap/jquery-jvectormap.css',
+//         'node_modules/admin-lte/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css',
+//         'node_modules/admin-lte/bower_components/bootstrap-daterangepicker/daterangepicker.css',
+//         'node_modules/admin-lte/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css',
+//         'node_modules/admin-lte/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css'
+//     ],  'public/css/admin-tle-css.css')
+mix.js('resources/js/app.js', 'public/js')
+   .js('resources/js/admin/js/admin-project-user.js', 'public/admin/js')
+   .js('resources/js/admin/js/admin-task.js', 'public/admin/js')
+   .js('resources/js/admin/js/file-input.js', 'public/admin/js')
    .sass('resources/sass/app.scss', 'public/css')
    .sass('resources/sass/mycss.scss', 'public/css/mycss.css');

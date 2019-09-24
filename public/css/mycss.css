@@ -75,13 +75,13 @@
 }
 
 .box-all {
-  border-top-left-radius:3px;
-  border-top-right-radius:3px;
-  border-bottom-right-radius:3px;
-  border-bottom-left-radius:3px;
-  border:1px solid #3c8dbc;
-  padding:10px;
-  background-color:#fff;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 3px;
+  border: 1px solid #3c8dbc;
+  padding: 10px;
+  background-color: #fff;
 }
 
 .size-image {
@@ -89,6 +89,7 @@
   height: 25px;
   border: 1px solid darkgrey;
 }
+
 .size-image img {
   height: 100%;
   width: 100%;
@@ -113,3 +114,4 @@
 .set-padding-top {
   padding-top: 20px;
 }
+
