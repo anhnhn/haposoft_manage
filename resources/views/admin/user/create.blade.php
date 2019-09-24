@@ -66,6 +66,7 @@
                                     <input type="file" id="avatar" name="avatar"
                                            class="@error('avatar') is-invalid @enderror" value="">
                                     <p class="help-block">Please chosse file</p>
+                                    <img id="image" src="" alt="your image" />
                                     @error('avatar')
                                     <div class="alert alert-danger">{{ $message }}</div>
                                     @enderror

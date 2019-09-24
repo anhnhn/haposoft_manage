@@ -68,6 +68,9 @@
                                     <div class="alert alert-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
+                                <div>
+                                    <input type="hidden" name="user_id" value="{{ $user->id }}">
+                                </div>
                             </div>
                             <div class="box-footer">
                                 <button type="submit" class="btn btn-primary">Update</button>

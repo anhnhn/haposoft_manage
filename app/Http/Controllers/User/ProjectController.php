@@ -8,7 +8,8 @@ use App\Http\Controllers\Controller;
 use Config;
 use Illuminate\Support\Facades\Auth;
 
-class ProjectController extends Controller
+class
+ProjectController extends Controller
 {
     public function index()
     {
@@ -36,8 +37,7 @@ class ProjectController extends Controller
                 'tasks' => $tasks,
             ];
             return view('user.project.show', $data);
-        }
-        else {
+        } else {
             return abort('401');
         }
     }
@@ -62,10 +62,10 @@ class ProjectController extends Controller
     {
         $projects = Project::with('customer')->where('name', 'like', '%' . $request->project_name . '%')
             ->whereHas('customer', function ($query) use ($request) {
-            if(isset($request->customer_name)) {
-                $query->where('name', 'like', '%' . $request->customer_name . '%');
-            }
-        })->paginate(config('variables.paginate'));
+                if (isset($request->customer_name)) {
+                    $query->where('name', 'like', '%' . $request->customer_name . '%');
+                }
+            })->paginate(config('variables.paginate'));
         $data = [
             'projects' => $projects,
         ];

@@ -57,10 +57,12 @@
                                     </div>
                                     <div class="form-group border col-6">
                                         <label for="avatar">Choose avatar</label>
-                                        <input type="file" id="avatar" name="avatar" value="{{ $user->avatar }}">
+                                        <input type="file" id="avatar" name="avatar">
                                         <img id="image" src="{{ asset($url) }}" alt="your image" />
                                     </div>
-                                    <input type="hidden" value="{{ $user->id }}" id="hiddenInput">
+                                    <input type="hidden" value="{{ $user->id }}" id="hiddenInput" name="user_id">
+                                    <input type="hidden" value="{{ $user->email }}" id="email" name="email">
+                                    <input type="hidden" value="{{ $user->department_id }}" id="department_id" name="department_id">
                                 </div>
                                 <div class="">
                                     <button type="submit" class="btn btn-primary">Update</button>

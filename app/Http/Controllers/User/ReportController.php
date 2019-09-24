@@ -22,11 +22,12 @@ class ReportController extends Controller
 
     public function store(ReportRequest $request)
     {
+        $user = Auth::user();
         $input = $request->except('tasks');
         $tasks = $request->get('tasks');
         $report = Report::create($input);
         $report->tasks()->attach($tasks);
-        return redirect()->route('users.showReport', $input['user_id'])->with('message', __('messages.create_message'));
+        return redirect()->route('users.showReport', $user->id)->with('message', __('messages.create_message'));
     }
 
     public function show($id)

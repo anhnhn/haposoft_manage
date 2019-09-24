@@ -58,7 +58,7 @@ class UserController extends Controller
     public function update(UserRequest $request, $id)
     {
         $user = User::findOrFail($id);
-        $input = $request->except('avatar');
+        $input = $request->except(['avatar', 'email', 'department_id']);
         if ($request->hasFile('avatar')) {
             Storage::disk('public')->delete('/' . $user->avatar);
             $input['avatar'] = $request->file('avatar')->store('images', ['disk' => 'public']);

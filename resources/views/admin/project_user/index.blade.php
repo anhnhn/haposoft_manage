@@ -65,7 +65,7 @@
                                 </tr>
                                 </tfoot>
                             </table>
-                            <div class="col-12 text-center">
+                            <div class="col-12 text-center" id="paginate">
                                 {{ $projects->links() }}
                             </div>
                         </div>

@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Admin\Customer;
 
+use App\Models\Customer;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -13,7 +14,8 @@ class DestroyTest extends TestCase
     public function testDestroySuccessFully()
     {
         parent::loginAdmin();
-        $customer = parent::createCustomer();
+        $customer = factory(Customer::class)->create();
+        $response = $this->call('delete', route('customers.destroy', $customer->id));
         $data = [
             'name' => $customer->name,
             'email' => $customer->email,
@@ -21,7 +23,6 @@ class DestroyTest extends TestCase
             'phone' => $customer->phone,
             'role_name' => 'customer',
         ];
-        $response = $this->call('delete', route('customers.destroy', $customer->id));
         $this->assertSoftDeleted('customers', $data);
         $response->assertRedirect(route('customers.index'));
     }

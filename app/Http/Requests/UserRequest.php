@@ -48,7 +48,7 @@ class UserRequest extends FormRequest
             {
                 $dateNow = Carbon::today();
                 return [
-                    'email' => 'email|max:255|unique:users,email,' . $this->route('user'),
+                    'email' => 'email|max:255|unique:users,email,' . $this->input('user_id'),
                     'name' => 'required|max:50',
                     'phone' => 'required|numeric|digits_between:10,15',
                     'department_id' => 'required|numeric',

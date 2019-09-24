@@ -7,8 +7,8 @@ jobs:
   build:
     docker:
       # Specify the version you desire here
-      - image: circleci/php:7.1-node-browsers
-      - image: circleci/php:7.1-fpm-browsers-legacy
+      - image: circleci/php:7.2-node-browsers
+      - image: circleci/php:7.2-fpm-browsers-legacy
 
 
       # Specify service dependencies here if necessary
@@ -16,12 +16,12 @@ jobs:
       # documented at https://circleci.com/docs/2.0/circleci-images/
       # Using the RAM variation mitigates I/O contention
       # for database intensive operations.
-      - image: circleci/mysql:5.7-ram
+      - image: circleci/mysql:5.7
         environment:
-          MYSQL_ROOT_PASSWORD:
-          MYSQL_DATABASE: haposoft_manage
-          MYSQL_USER: root
-          MYSQL_PASSWORD: 
+          MYSQL_DATABASE: haposoft_manage_test
+          MYSQL_USER: forge
+          MYSQL_PASSWORD: forge
+          MYSQL_ROOT_PASSWORD: root
       #
       # - image: redis:2.8.19
 
@@ -32,7 +32,6 @@ jobs:
       - run: sudo apt-get install libpng-dev libfreetype6-dev libjpeg-dev
       - run: sudo docker-php-ext-configure gd --with-gd --with-jpeg-dir --with-png-dir
       - run: sudo docker-php-ext-install pdo_mysql zip gd
-
       # Download and cache dependencies
       - restore_cache:
           keys:
@@ -50,20 +49,23 @@ jobs:
           keys:
             - node-v1-{{ checksum "package.json" }}
             - node-v1-
-      - run: yarn install
+      - run: npm install
+      - run: npm audit fix
       - save_cache:
           key: node-v1-{{ checksum "package.json" }}
           paths:
             - node_modules
-      - run: yarn run dev
-      # prepare the database
+      - run: npm run dev
+      #
       - run: cp .env.testing .env
+      - run: php artisan storage:link
       - run: php artisan migrate --env=testing --force
       - run:
           name: "Run tests"
           command: phpdbg -qrr vendor/bin/phpunit -d memory_limit=512M --coverage-html build/coverage-report
       - store_artifacts:
           path:  build/coverage-report
+          destination: console
 
 workflows:
   version: 2

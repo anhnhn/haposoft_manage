@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Admin\Report;
 
+use App\Models\Project;
 use App\Models\Report;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -13,31 +14,33 @@ class SearchTest extends TestCase
 
     public function testSearchSuccessFully()
     {
-        parent::loginAdmin();
         $department = parent::createDepartment();
-        $user = parent::createUser();
-        $reports = factory(Report::class, 15)->create();
+        $user = parent::loginUser();
+        parent::createCustomer();
+        $projects = factory(Project::class, 15)->create();
         $data = [
-            'reportName' => $reports->first()->name,
+            'projectName' => $projects->first()->name,
+            'customerName' => $projects->first()->customer->name,
         ];
-        $response = $this->call('get', route('reports.search'), $data);
+        $response = $this->call('get', route('user-projects.search', $user->id), $data);
         $this->assertEquals(200, $response->status());
-        $response->assertViewIs('admin.report.index');
-        $response->assertViewHas('reports');
+        $response->assertViewIs('user.home');
+        $response->assertViewHas('projects');
     }
 
     public function testSearchNullFully()
     {
-        parent::loginAdmin();
         $department = parent::createDepartment();
-        $user = parent::createUser();
-        $reports = factory(Report::class, 15)->create();
+        $user = parent::loginUser();
+        parent::createCustomer();
+        $projects = factory(Project::class, 15)->create();
         $data = [
             'projectName' => '',
+            'customerName' => '',
         ];
-        $response = $this->call('get', route('reports.search'), $data);
+        $response = $this->call('get', route('user-projects.search', $user->id), $data);
         $this->assertEquals(200, $response->status());
-        $response->assertViewIs('admin.report.index');
-        $response->assertViewHas('reports');
+        $response->assertViewIs('user.home');
+        $response->assertViewHas('projects');
     }
 }
