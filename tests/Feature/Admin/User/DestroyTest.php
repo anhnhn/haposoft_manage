@@ -14,7 +14,7 @@ class DestroyTest extends TestCase
     public function testDestroySuccessFully()
     {
         parent::loginAdmin();
-        $department = parent::CreateDepartment();
+        $department = parent::createDepartment();
         $user = parent::createUser();
         $data = [
             'name' => $user->name,
@@ -33,7 +33,7 @@ class DestroyTest extends TestCase
     public function testDestroyfail()
     {
         parent::loginAdmin();
-        $department = parent::CreateDepartment();
+        $department = parent::createDepartment();
         $user = parent::createUser();
         $response = $this->call('delete', route('users.destroy', $user->id+1));
         $response->assertStatus(404);

@@ -26,6 +26,7 @@ class TaskRequest extends FormRequest
                     'content' => 'required',
                     'hours' => 'required|numeric',
                     'project_id' => 'required|numeric',
+                    'user_id' => 'numeric'
                 ];
             }
             case 'PUT':
@@ -35,6 +36,7 @@ class TaskRequest extends FormRequest
                     'content' => 'required',
                     'hours' => 'required|numeric',
                     'project_id' => 'required|numeric',
+                    'user_id' => 'numeric'
                 ];
             }
             case 'PATCH':

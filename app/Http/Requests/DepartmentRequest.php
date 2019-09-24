@@ -32,13 +32,13 @@ class DepartmentRequest extends FormRequest
             case 'POST':
             {
                 return [
-                    'name' => 'required|unique:departments,name',
+                    'name' => 'required|max:255|unique:departments,name',
                 ];
             }
             case 'PUT':
             {
                 return [
-                    'name' => 'required|unique:departments,name,' . $this->route('department'),
+                    'name' => 'required|max:50|unique:departments,name,' . $this->route('department'),
                 ];
             }
             case 'PATCH':
